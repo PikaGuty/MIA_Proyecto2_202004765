@@ -26,6 +26,7 @@ void comando_LS(char *token);
 void comando_PAUSE(char *token);
 void comando_LOSS(char *token);
 void comando_REP(char *token);
+void comando_SYNCRO(char *token);
 
 void analizar(){
     cout <<endl<<"INGRESE UN COMANDO VALIDO: " << endl;
@@ -104,8 +105,12 @@ void analizar(){
             cout<<"************************ Ejecutando REP ************************"<<endl;
             token = strtok(NULL, " ");
             comando_REP(token);
+        }else if (actual=="syncronice"){
+            cout<<"************************ Ejecutando SYNCRONICE ************************"<<endl;
+            token = strtok(NULL, " ");
+            comando_SYNCRO(token);
         }else {
-            cout << "Error: Este comando no existe" << endl;
+            cout << "Error: Este comando no existe" <<actual<< endl;
         }
 
 
@@ -194,6 +199,10 @@ void analizarEX(string texto){
                 cout << "************************ Ejecutando REP ************************" << endl;
                 token = strtok(NULL, " ");
                 comando_REP(token);
+            }else if (actual=="syncronice"){
+                cout<<"************************ Ejecutando SYNCRONICE ************************"<<endl;
+                token = strtok(NULL, " ");
+                comando_SYNCRO(token);
             } else {
                 cout << "Error: Este comando no existe" << endl;
             }
@@ -1590,3 +1599,88 @@ void comando_REP(char *token){
     }
 }
 
+void comando_SYNCRO(char *token){
+    bool xid = false, xpath = false;
+    char path[512], id[64];
+
+    if(token == NULL){//Error por si no trae ningun parametro
+        cout<<"Error: El comando \"SYCRONICE\" debe poseer los parámetros $id, $name, $path ya que son de caracter obligatorio."<<endl;
+    }
+
+    string comandos = "";
+    comandos+=token;
+    while (token != NULL) { //Convirtiendo los tokens recibidos en una sola cadena
+        token = strtok(NULL, " ");
+        if (token != NULL){
+            comandos+=" ";
+            comandos+=token;
+        }
+    }
+
+    string ncomando, anterior;
+
+    while (comandos != "") { //Volviendo a desarmar la cadena para obtener los parámetros
+        ncomando = comandos.substr(0, comandos.find("=>"));
+        transform(ncomando.begin(), ncomando.end(), ncomando.begin(), ::tolower);
+        int pos = comandos.find("=>");
+
+        if (ncomando == "$id" && xid == false) { //Reconociendo el id y sacando su parámetro
+            xid = true;//Indicando que ya se evaluó al ser de caracter obligatorio
+            comandos.erase(0, 2 + pos);
+
+            //PASANDO A LA VARIABLE SIZE EL DATO
+            strcpy(id,comandos.substr(0, comandos.find(" ")).c_str());
+
+            pos = comandos.find(" ");
+            comandos.erase(0, 1 + pos);
+        } else if (ncomando == "$path" && xpath == false) {
+            xpath = true;//Indicando que ya se evaluó al ser de caracter obligatorio
+            comandos.erase(0, 2 + pos);
+
+            pos = comandos.find("\"");
+            comandos.erase(0, 1 + pos);
+
+            //PASANDO A LA VARIABLE PATH EL DATO
+            strcpy(path, comandos.substr(0, comandos.find("\"")).c_str());
+
+            pos = comandos.find("\"");
+            comandos.erase(0, 1 + pos);
+
+            pos = comandos.find(" ");
+            comandos.erase(0, 1 + pos);
+        }else{
+            if (comandos!=anterior){
+                cout<<"Error: "<<ncomando<<" no es un parámetro del comando \"SYCRONICE\""<<endl;
+            }
+        }
+
+        if (comandos==anterior){ //Verificando si ya se llegó al final (no cambia por que no encuentra espacio)
+            comandos="";
+        }else{
+            anterior=comandos;
+        }
+    }
+
+
+    if(xid == true && xpath==true){//Se puede ejecutar el comando
+        //LLAMAR AL METODO PARA TERMINAR VERIFICACIONES Y REALIZAR LO QUE TIENE QUE HACER
+        cout<<"Id: "<<id<<endl;
+        cout<<"Path: "<<path<<endl;
+        cSYCRO(path,id);
+    }else{ //Notificando errores si no se ingresaron los parametros obligatorios al comando
+        cout<<"Error: El comando \"SYCRONICE\" debe poseer el/los parámetros ";
+        if(xid == false){
+            cout<<"$id";
+            if(xpath == false){
+                cout<<", ";
+            }else{
+                cout<<" ";
+            }
+        }
+        if(xpath == false){
+            cout<<"$path ";
+        }
+
+        cout<<"ya que son de caracter obligatorio."<<endl;
+    }
+}

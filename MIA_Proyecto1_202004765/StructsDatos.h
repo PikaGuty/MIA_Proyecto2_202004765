@@ -6,6 +6,7 @@
 #define MIA_PROYECTO1_202004765_STRUCTSDATOS_H
 #include "estructuras.h"
 
+using namespace std;
 
 typedef char times[50];
 
@@ -49,5 +50,19 @@ typedef struct mnt_nodo{
 typedef struct mnt_lista{
     mnt_nodo* cabeza;
 }mnt_lista;
+
+typedef struct jscarpeta{
+    int id=0;
+    string nombre="";
+    int padre=0;
+    int hijo=0;
+} jscarpeta;
+
+typedef struct jsarchivo{
+    int id=0;
+    string nombre="";
+    string contenido="";
+    int padre=0;
+} jsarchivo;
 
 #endif //MIA_PROYECTO1_202004765_STRUCTSDATOS_H

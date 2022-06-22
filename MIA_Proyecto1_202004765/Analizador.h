@@ -14,6 +14,7 @@
 #include "cMkdir.h"
 #include "cMkfile.h"
 #include "cExec.h"
+#include "cSyncronice.h"
 
 void analizar();
 void analizarEX(string texto);

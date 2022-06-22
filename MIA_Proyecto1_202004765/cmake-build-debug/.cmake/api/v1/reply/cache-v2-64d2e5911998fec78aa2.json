@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/javierg/Escritorio/U/Archivos/MIA_Proyecto1_202004765/cmake-build-debug"
+			"value" : "/home/javierg/Escritorio/U/Archivos/MIA_Proyecto2_202004765/MIA_Proyecto1_202004765/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -591,7 +591,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/javierg/Escritorio/U/Archivos/MIA_Proyecto1_202004765"
+			"value" : "/home/javierg/Escritorio/U/Archivos/MIA_Proyecto2_202004765/MIA_Proyecto1_202004765"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -1123,7 +1123,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/javierg/Escritorio/U/Archivos/MIA_Proyecto1_202004765/cmake-build-debug"
+			"value" : "/home/javierg/Escritorio/U/Archivos/MIA_Proyecto2_202004765/MIA_Proyecto1_202004765/cmake-build-debug"
 		},
 		{
 			"name" : "MIA_Proyecto1_202004765_IS_TOP_LEVEL",
@@ -1147,7 +1147,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/javierg/Escritorio/U/Archivos/MIA_Proyecto1_202004765"
+			"value" : "/home/javierg/Escritorio/U/Archivos/MIA_Proyecto2_202004765/MIA_Proyecto1_202004765"
 		}
 	],
 	"kind" : "cache",
