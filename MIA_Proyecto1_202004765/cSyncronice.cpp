@@ -4,7 +4,16 @@
 
 #include "cSyncronice.h"
 
-string carpetas(char id[16]);
+#include <iostream>
+#include <sstream>
+#include <cstdlib>
+#include "dnc/JSON.hpp"
+
+using JSON = dnc::JSON;
+
+JSON subCarpeta(int inodoAct, superBloque sb, jscarpeta carpetas[512], jsarchivo archivos[512]);
+
+string carpetas(char id[16], char path[512]);
 
 void cSYCRO(char path[512], char id[16]){
 
@@ -12,16 +21,18 @@ void cSYCRO(char path[512], char id[16]){
     mnt_nodo mountNodo = retornarNodoMount(id); //la particion que tiene los datos
 
     int n = sb.s_inodes_count; //Total de inodos
-    int direccionesInodos[1024];
-    obtenerListaBMI(id, direccionesInodos);
+        int direccionesInodos[1024];
+        obtenerListaBMI(id, direccionesInodos);
 
-    inodo ino;
-    ino = inodos_leer1(direccionesInodos[0], n, mountNodo.mnt_ruta, ino);
+        inodo ino;
+        ino = inodos_leer1(direccionesInodos[0], n, mountNodo.mnt_ruta, ino);
 
-    carpetas(id);
+        carpetas(id,path);
+
+
 }
 
-string carpetas(char id[16]){
+string carpetas(char id[16], char path[512]){
     superBloque sb = sb_retornar(id);
     mnt_nodo mountNodo = retornarNodoMount(id); //la particion que tiene los datos
 
@@ -121,28 +132,80 @@ string carpetas(char id[16]){
 
     string json = "";
 
+    JSON contenidoCarpeta({
+        {"id",to_string(sb.s_inode_start)},
+        {"nombre","root"},
+        {"contenido",JSON::Array({
+            subCarpeta(sb.s_inode_start,sb,carpetas,archivos)
+        })}
+    });
 
-    inodo inoo;
-    inoo = inodos_leer1(sb.s_first_ino, n, mountNodo.mnt_ruta, inoo);
+    JSON obj({
+        {"carpeta", JSON::Array({
+            contenidoCarpeta
+        })}
+    });
 
-    json = "{\n"
-           "\"carpeta\":{\n"
-           "\t\"id_carpeta\": ";
-    json+= to_string(sb.s_first_ino);
-    json+="\n"
-           "\t\"name_carpeta\": \"root\",\n"
-           "\t\"ctime_carpeta\": \"";
-    json+= inoo.i_ctime;
-    json+="\",\n"
-          "\t\"contenido_carpeta\": {\n";
-
-    json+="";
-
-
-    json += "\t}\n";
-    json += "}\n";
-    json += "}";
-
-    cout<<json<<endl;
-
+    if(obj.saveToFile(path)){
+        cout << "¡Archivo guardado exitosamente!" << endl;
+    }else{
+        cout << "No se ha podido guardar el archivo." << endl;
+    }
 }
+
+JSON subCarpeta(int inodoAct,superBloque sb,jscarpeta carpetas[1052], jsarchivo archivos[1052]){
+
+    JSON contenidoC[64], contenidoA[64];
+    JSON empty;
+    int cantidadC=0, cantidadA=0;
+    for (int i = 0; i < 1052; ++i) {
+        if(archivos[i].id!=0) {
+            for (int j = 0; j < 1052; ++j) {
+                if (archivos[j].id != 0) {
+                    if (archivos[j].padre==inodoAct) {
+                        int iddd = archivos[j].id;
+                        archivos[j].id=0;
+                        JSON contenidoArchivo({
+                                {"id", to_string(iddd)},
+                                {"nombre",archivos[j].nombre},
+                                {"contenido",archivos[j].contenido}
+                        });
+                        contenidoA[cantidadA]=contenidoArchivo;
+                        cantidadA++;
+                    }
+                }
+            }
+
+            if (carpetas[i].padre==inodoAct) {
+                int idd = carpetas[i].id;
+                carpetas[i].id=0;
+                JSON contenidoCarpeta({
+                        {"id", to_string(idd)},
+                        {"nombre",carpetas[i].nombre},
+                        {"contenido",JSON::Array({
+                        subCarpeta(idd,sb,carpetas,archivos)
+                    })}
+                });
+                contenidoC[cantidadC]=contenidoCarpeta;
+                cantidadC++;
+            }
+
+        }
+    }
+
+
+
+    JSON obj({
+        {"carpeta", JSON::Array({
+            contenidoC[0],contenidoC[1],contenidoC[2],contenidoC[3],contenidoC[4],
+            contenidoC[5],contenidoC[6],contenidoC[7],contenidoC[8],contenidoC[9],
+        })},
+        {"archivo", JSON::Array({
+            contenidoA[0],contenidoA[1],contenidoA[2],contenidoA[3],contenidoA[4],
+            contenidoA[5],contenidoA[6],contenidoA[7],contenidoA[8],contenidoA[9]
+        })}
+    });
+
+    return obj;
+}
+

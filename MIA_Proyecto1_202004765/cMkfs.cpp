@@ -50,7 +50,7 @@ void cMkfs(int add, char id[16], char unitt[16], char type[16]){
             part_colocacion = particion.mnt_particion.part_type;
             strcpy(path,particion.mnt_ruta);
             strcpy(nombre,particion.mnt_particion.part_name);
-            status = particion.mnt_particion.part_status;
+            particion.mnt_particion.part_status='2';
             pimerEspacioEBR = 0;
         } else {//Si es el ebr
             part_inicio = particion.mnt_ebr.part_start;
@@ -58,7 +58,7 @@ void cMkfs(int add, char id[16], char unitt[16], char type[16]){
             part_colocacion = metodoDeColocacionExtendida;
             strcpy(path,particion.mnt_ruta);
             strcpy(nombre,particion.mnt_ebr.part_name);
-            status = particion.mnt_ebr.part_status;
+            particion.mnt_ebr.part_status='2';
             pimerEspacioEBR = sizeof (ebr);
         }
 
@@ -76,13 +76,12 @@ void cMkfs(int add, char id[16], char unitt[16], char type[16]){
                        3 * n * sizeof(bloqueCarpeta);
             cout << "Tamaño de formato es = " << disk << endl;
 
-            if (status != '2') {
-                crear_ext3(particion, n, part_inicio + pimerEspacioEBR); //creando los sectores, super bloque, inodos
+            crear_ext3(particion, n, part_inicio + pimerEspacioEBR); //creando los sectores, super bloque, inodos
 
                 actualizarStatus(path, nombre, '2');
                 crearRoot(id);
                 cout << "\t...................Se ha formateado la partición................" << endl;
-            }
+
 
     }
 }

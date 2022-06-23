@@ -25,7 +25,7 @@ void cMkfile(char path[512], char id[16], bool p, int size, char cont[512]){
         return;
     }
 
-    if(size==0 && strcmp(cont,"") == 0 ){
+    if(size<0 && strcmp(cont,"") == 0 ){
         cout<<"Error: El debe incluirse el parámetro \"@size\" o el \"@cont\""<<endl;
         return;
     }
