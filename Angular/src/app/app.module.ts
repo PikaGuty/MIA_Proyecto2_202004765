@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { PlantillaComponent } from './plantilla/plantilla.component';
 import { BarrausrComponent } from './barrausr/barrausr.component';
 import { AdminComponent } from './admin/admin.component';
+import { E404Component } from './e404/e404.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AdminComponent } from './admin/admin.component';
     LoginComponent,
     PlantillaComponent,
     BarrausrComponent,
-    AdminComponent
+    AdminComponent,
+    E404Component
   ],
   imports: [
     BrowserModule,

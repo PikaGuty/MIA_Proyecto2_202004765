@@ -1,13 +1,1 @@
-{
-  "usuarios":{"
-  admin":{
-    "nombre":"Javier",
-    "apellido":"Gutierrez",
-    "nusr":"202004765JavierGutierrez",
-    "correo":"fubox.admi@gmail.com",
-    "telefono":"54338088",
-    "pass":"1234",
-    "fnac":"14-03-2001",
-    "fcre":"23-06-2022"
-  },
-    "normales":[{"nombre":"Alejandro","apellido":"de León","nusr":"PikaGuty","correo":"gohanteemo@gmail.com","telefono":"54338088","pass":"1234","fnac":"14-03-2001","fcre":"22-06-2022"}]}}
+{"usuarios":{"admin":{"nombre":"Javier","apellido":"Gutierrez","nusr":"202004765JavierGutierrez","correo":"fubox.admi@gmail.com","telefono":"54338088","pass":"1234","fnac":"14-03-2001","fcre":"23-06-2022"},"normales":[null]},"carpetas":[]}
