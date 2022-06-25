@@ -55,7 +55,8 @@ typedef struct jscarpeta{
     int id=0;
     string nombre="";
     int padre=0;
-    int hijo=0;
+    char fecha[32]="";
+    int size = 0;
 } jscarpeta;
 
 typedef struct jsarchivo{
@@ -63,6 +64,8 @@ typedef struct jsarchivo{
     string nombre="";
     string contenido="";
     int padre=0;
+    char fecha[32]="";
+    int size = 0;
 } jsarchivo;
 
 #endif //MIA_PROYECTO1_202004765_STRUCTSDATOS_H

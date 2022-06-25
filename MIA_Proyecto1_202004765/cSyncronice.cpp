@@ -68,9 +68,10 @@ string carpetas(char id[16], char path[512]){
                                                 carpetas[l].nombre=carp.b_content[k].b_name;
                                                 carpetas[l].id=carp.b_content[k].b_inodo;
                                                 carpetas[l].padre=direccionesInodos[i];
-
                                                 inodo inoo;
                                                 inoo = inodos_leer1(carp.b_content[k].b_inodo, n, mountNodo.mnt_ruta, inoo);
+                                                carpetas[l].size=inoo.i_size;
+                                                strcpy(carpetas[l].fecha,inoo.i_ctime);
                                                 if(inoo.i_type=='1'){
                                                     cout<<"ES ARCHIVO"<<endl;
                                                     for (int m = 0; m < 1052; ++m) {
@@ -78,6 +79,8 @@ string carpetas(char id[16], char path[512]){
                                                             carpetas[l].id=0;
                                                             archivos[m].nombre=carp.b_content[k].b_name;
                                                             archivos[m].id=carp.b_content[k].b_inodo;
+                                                            archivos[m].size=inoo.i_size;
+                                                            strcpy(archivos[m].fecha,inoo.i_ctime);
                                                             archivos[m].padre=direccionesInodos[i];
                                                             string contenido="";
                                                             for (int i1 = 0; i1 < 15; ++i1) {
@@ -109,30 +112,79 @@ string carpetas(char id[16], char path[512]){
         }
     }
 
+    string str_json="{";
+    str_json+="\t\"carpetas\":[\n";
+
+    bool pcar=true, parch=true;
+
     for (int i = 0; i < 1052; ++i) {
         if(carpetas[i].id!=0) {
-            cout<<"*****"<<endl;
+            if(pcar){
+                pcar=false;
+                str_json+="\t\t{\n";
+                str_json+="\t\t\t\"nombre\":\"";str_json+=carpetas[i].nombre;str_json+="\",\n";
+                str_json+="\t\t\t\"id\":\"";str_json+= to_string(carpetas[i].id);str_json+="\",\n";
+                str_json+="\t\t\t\"padre\":\"";str_json+= to_string(carpetas[i].padre);str_json+="\",\n";
+                str_json+="\t\t\t\"size\":\"";str_json+= to_string(carpetas[i].size);str_json+="\",\n";
+                str_json+="\t\t\t\"fecha\":\"";str_json+= carpetas[i].fecha;str_json+="\"\n";
+                str_json+="\t\t}";
+            }else{
+                str_json+=",\n\t\t{\n";
+                str_json+="\t\t\t\"nombre\":\"";str_json+=carpetas[i].nombre;str_json+="\",\n";
+                str_json+="\t\t\t\"id\":\"";str_json+= to_string(carpetas[i].id);str_json+="\",\n";
+                str_json+="\t\t\t\"padre\":\"";str_json+= to_string(carpetas[i].padre);str_json+="\",\n";
+                str_json+="\t\t\t\"size\":\"";str_json+= to_string(carpetas[i].size);str_json+="\",\n";
+                str_json+="\t\t\t\"fecha\":\"";str_json+= carpetas[i].fecha;str_json+="\"\n";
+                str_json+="\t\t}";
+            }
+            /*cout<<"*****"<<endl;
             cout << "Nombre: " << carpetas[i].nombre << endl;
             cout << "ID: " << carpetas[i].id << endl;
             cout << "Padre: " << carpetas[i].padre << endl;
-            cout<<"*****"<<endl;
+            cout<<"*****"<<endl;*/
         }
     }
+    str_json+="\n\t],\n";
+    str_json+="\t\"archivos\":[\n";
 
     for (int i = 0; i < 1052; ++i) {
         if(archivos[i].id!=0) {
-            cout<<"*****"<<endl;
+            if(parch){
+                parch=false;
+                str_json+="\t\t{\n";
+                str_json+="\t\t\t\"nombre\":\"";str_json+=archivos[i].nombre;str_json+="\",\n";
+                str_json+="\t\t\t\"id\":\"";str_json+= to_string(archivos[i].id);str_json+="\",\n";
+                str_json+="\t\t\t\"padre\":\"";str_json+= to_string(archivos[i].padre);str_json+="\",\n";
+                str_json+="\t\t\t\"size\":\"";str_json+= to_string(archivos[i].size);str_json+="\",\n";
+                str_json+="\t\t\t\"fecha\":\"";str_json+= archivos[i].fecha;str_json+="\",\n";
+                str_json+="\t\t\t\"contenido\":\"";str_json+= archivos[i].contenido;str_json+="\"\n";
+                str_json+="\t\t}";
+            }else{
+                str_json+=",\n\t\t{\n";
+                str_json+="\t\t\t\"nombre\":\"";str_json+=carpetas[i].nombre;str_json+="\",\n";
+                str_json+="\t\t\t\"id\":\"";str_json+= to_string(carpetas[i].id);str_json+="\",\n";
+                str_json+="\t\t\t\"padre\":\"";str_json+= to_string(carpetas[i].padre);str_json+="\",\n";
+                str_json+="\t\t\t\"size\":\"";str_json+= to_string(archivos[i].size);str_json+="\",\n";
+                str_json+="\t\t\t\"fecha\":\"";str_json+= archivos[i].fecha;str_json+="\",\n";
+                str_json+="\t\t\t\"contenido\":\"";str_json+= archivos[i].contenido;str_json+="\"\n";
+                str_json+="\t\t}";
+            }
+            /*cout<<"*****"<<endl;
             cout << "Nombre: " << archivos[i].nombre << endl;
             cout << "ID: " << archivos[i].id << endl;
             cout << "Padre: " << archivos[i].padre << endl;
             cout << "Contenido: " << archivos[i].contenido << endl;
-            cout<<"*****"<<endl;
+            cout<<"*****"<<endl;*/
         }
     }
+    str_json+="\n\t]\n";
+    str_json+="}";
 
-    string json = "";
+    JSON json;
+    json.parse(str_json);
 
-    JSON contenidoCarpeta({
+
+    /*JSON contenidoCarpeta({
         {"id",to_string(sb.s_inode_start)},
         {"nombre","root"},
         {"contenido",JSON::Array({
@@ -144,9 +196,9 @@ string carpetas(char id[16], char path[512]){
         {"carpeta", JSON::Array({
             contenidoCarpeta
         })}
-    });
+    });*/
 
-    if(obj.saveToFile(path)){
+    if(json.saveToFile(path)){
         cout << "¡Archivo guardado exitosamente!" << endl;
     }else{
         cout << "No se ha podido guardar el archivo." << endl;
