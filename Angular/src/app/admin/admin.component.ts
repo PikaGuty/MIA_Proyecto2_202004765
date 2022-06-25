@@ -31,6 +31,7 @@ export class AdminComponent implements OnInit {
 
   transformarJSON(inicial:string){
     let obj = JSON.parse(inicial);
+    console.log(obj.root);
     for (let i = 0; i < obj.carpetas.length; i++) {
       console.log(obj.carpetas[i]);
       

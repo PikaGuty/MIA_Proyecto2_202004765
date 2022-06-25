@@ -115,6 +115,9 @@ string carpetas(char id[16], char path[512]){
     }
 
     string str_json="{";
+    str_json+="\t\"root\":{\n";
+    str_json+="\t\t\"inicio\":\"";str_json+= to_string(sb.s_first_ino);str_json+="\"\n";
+    str_json+="\t},\n";
     str_json+="\t\"carpetas\":[\n";
 
     bool pcar=true, parch=true;
