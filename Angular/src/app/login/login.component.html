@@ -2,7 +2,7 @@
     <div class="container ">
         <div class="row">
             <div class="card forma mt-4" >
-                <div class="card-body text-center" style="border-radius: 20px;">
+                <div class="card-body text-center" style="border-radius: 20px;"> 
                     <!-- Icon -->
                     <div>
                         <h1 >FuBox</h1>
@@ -13,15 +13,15 @@
                     <br>
                     <form>
                         <div class="mb-2">
-                            <b><label class="form-label" >Usuario</label></b>
-                            <input type="email" class="form-control" >
+                            <b><label class="form-label" >Correo</label></b>
+                            <input type="email" class="form-control" name="campo_correo" [(ngModel)]=this.correo>
                         </div>
                         <div class="mb-2">
                             <b><label class="form-label" >Contraseña</label></b>
-                            <input type="password" class="form-control" id="exampleInputPassword1">
+                            <input type="password" class="form-control" name="campo_pass" [(ngModel)]=this.pass>
                         </div>
-                        <button class="btn btn-success mt-2" >Ingresar</button><br>
-                        <button type="button" class="btn btn-link">Registrate</button>
+                        <button class="btn btn-success mt-2" (click)="ingresar()">Ingresar</button><br>
+                        <a class="btn btn-link" href="Registro">Registrate</a>
                     </form>
     
                     <br>

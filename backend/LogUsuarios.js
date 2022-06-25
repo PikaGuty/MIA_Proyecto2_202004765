@@ -9,26 +9,29 @@ function obtener(){ //Obtener todos los datos almancenados
 
 function ingresarUsuario(datos){ //Ingresar JSON de nuevo usuario
     if(!comprobar(datos.nusr)){
-        const fs = require("fs");
-        let usersjson = fs.readFileSync("./datos.json","utf-8");
-        let cont = JSON.parse(usersjson);
-        
-        var usrs = cont.usuarios;
-        usrs.normales.push(datos);
-        
-        usersjson = JSON.stringify(cont);
-        fs.writeFileSync("./datos.json",usersjson,"utf-8");
+        if(!comprobar2(datos.correo)){
+            const fs = require("fs");
+            let usersjson = fs.readFileSync("./datos.json","utf-8");
+            let cont = JSON.parse(usersjson);
+            
+            var usrs = cont.usuarios;
+            usrs.normales.push(datos);
+            
+            usersjson = JSON.stringify(cont);
+            fs.writeFileSync("./datos.json",usersjson,"utf-8");
 
-        const dia = new Date();
-        dia.getDate();
+            const dia = new Date();
+            dia.getDate();
 
-        contenidoCorreo="Bienvenido a FuBox, se ha registrado exitosamente el "+dia+", espera a que un administrador habilite tu cuenta para poder disfrutar de la experiencia de FuBox. :)";
-        enviarCorreo(datos.correo,"FuBox - Registro exitoso", contenidoCorreo);
-        return "Agregado Exitosamente"
+            contenidoCorreo="Bienvenido a FuBox, se ha registrado exitosamente el "+dia+", espera a que un administrador habilite tu cuenta para poder disfrutar de la experiencia de FuBox. :)";
+            enviarCorreo(datos.correo,"FuBox - Registro exitoso", contenidoCorreo);
+            return "Agregado Exitosamente"
+        }else{
+            return "El correo "+datos.correo+" está siendo utilizado"
+        }
     }else{
         return "El usuario "+datos.nusr+" ya existe"
     }
-    
 }
 
 function comprobar(usuario){
@@ -39,9 +42,30 @@ function comprobar(usuario){
     var usrs = cont.usuarios; //accediendo a elemento usuarios
 
     for (let i = 0; i < usrs.normales.length; i++) {
-        if(usrs.normales[i].nusr==usuario){
-            return true;
+        if(usrs.normales[i]!=null){
+            if(usrs.normales[i].nusr==usuario){
+                return true;
+            }    
         }
+            
+    }
+    return false;
+}
+
+function comprobar2(correo){
+    const fs = require("fs");
+    let usersjson = fs.readFileSync("./datos.json","utf-8"); //Leyendo archivo JSON
+    let cont = JSON.parse(usersjson); //Parseando a JSON
+
+    var usrs = cont.usuarios; //accediendo a elemento usuarios
+
+    for (let i = 0; i < usrs.normales.length; i++) {
+        if(usrs.normales[i]!=null){
+            if(usrs.normales[i].correo==correo){
+                return true;
+            }    
+        }
+            
     }
     return false;
 }
@@ -120,22 +144,23 @@ function login(datos){
 
     var usrs = cont.usuarios; //accediendo a elemento usuarios
 
-    if(usrs.admin.nusr==datos.nusr&&usrs.admin.pass==datos.pass){
-        return "admin"
+    if(usrs.admin.correo==datos.correo&&usrs.admin.pass==datos.pass){
+        return "Bienvenido Administrador"
     }else{
         for (let i = 0; i < usrs.normales.length; i++) {
-            if(usrs.normales[i].nusr==datos.nusr&&usrs.normales[i].pass==datos.pass){
+            
+            if(usrs.normales[i].correo==datos.correo&&usrs.normales[i].pass==datos.pass){
                 if(usrs.normales[i].status=='0'){
-                    return "habilitar"
+                    return "Su cuenta aún no ha sido habilitada por el administrador"
                 }else if(usrs.normales[i].status=='2'){
-                    return "recuperar "
+                    return "Ha llegado a su cuenta un correo para establecer una contraseña nueva"
                 }else{
-                    return "usuario bien"
+                    return "Bienvenido"
                 }
                 
             }
         }
-        return "no existe"
+        return "Correo y/o contraseña incorrectos"
     }
 }
 
