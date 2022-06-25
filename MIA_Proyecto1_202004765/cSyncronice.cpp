@@ -60,9 +60,11 @@ string carpetas(char id[16], char path[512]){
                             carp = blocksC_leer(ino.i_block[j],n,mountNodo.mnt_ruta,carp);
 
                             for (int k = 0; k < 4; ++k) {
+                                //cout<<"AAAAA "<<carp.b_content[k].b_name<<endl;
                                 if(carp.b_content[k].b_inodo!=-1) {
                                     if (strcmp(carp.b_content[k].b_name,".") != 0&&strcmp(carp.b_content[k].b_name,"..") != 0&&strcmp(carp.b_content[k].b_name,"") != 0){
                                         bool salir = false;
+                                        //cout<<"SI ENTRA "<<carp.b_content[k].b_name<<endl;
                                         for (int l = 0; l < 1052; ++l) {
                                             if(carpetas[l].id==0){
                                                 carpetas[l].nombre=carp.b_content[k].b_name;
@@ -73,11 +75,11 @@ string carpetas(char id[16], char path[512]){
                                                 carpetas[l].size=inoo.i_size;
                                                 strcpy(carpetas[l].fecha,inoo.i_ctime);
                                                 if(inoo.i_type=='1'){
-                                                    cout<<"ES ARCHIVO"<<endl;
                                                     for (int m = 0; m < 1052; ++m) {
                                                         if (archivos[m].id == 0) {
                                                             carpetas[l].id=0;
                                                             archivos[m].nombre=carp.b_content[k].b_name;
+                                                            //cout<<"SI ENTRA "<<carp.b_content[k].b_name<<endl;
                                                             archivos[m].id=carp.b_content[k].b_inodo;
                                                             archivos[m].size=inoo.i_size;
                                                             strcpy(archivos[m].fecha,inoo.i_ctime);
@@ -161,9 +163,9 @@ string carpetas(char id[16], char path[512]){
                 str_json+="\t\t}";
             }else{
                 str_json+=",\n\t\t{\n";
-                str_json+="\t\t\t\"nombre\":\"";str_json+=carpetas[i].nombre;str_json+="\",\n";
-                str_json+="\t\t\t\"id\":\"";str_json+= to_string(carpetas[i].id);str_json+="\",\n";
-                str_json+="\t\t\t\"padre\":\"";str_json+= to_string(carpetas[i].padre);str_json+="\",\n";
+                str_json+="\t\t\t\"nombre\":\"";str_json+=archivos[i].nombre;str_json+="\",\n";
+                str_json+="\t\t\t\"id\":\"";str_json+= to_string(archivos[i].id);str_json+="\",\n";
+                str_json+="\t\t\t\"padre\":\"";str_json+= to_string(archivos[i].padre);str_json+="\",\n";
                 str_json+="\t\t\t\"size\":\"";str_json+= to_string(archivos[i].size);str_json+="\",\n";
                 str_json+="\t\t\t\"fecha\":\"";str_json+= archivos[i].fecha;str_json+="\",\n";
                 str_json+="\t\t\t\"contenido\":\"";str_json+= archivos[i].contenido;str_json+="\"\n";

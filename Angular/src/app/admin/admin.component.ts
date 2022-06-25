@@ -31,10 +31,10 @@ export class AdminComponent implements OnInit {
 
   transformarJSON(inicial:string){
     let obj = JSON.parse(inicial);
-    /*for (let i = 0; i < obj.carpetas.length; i++) {
+    for (let i = 0; i < obj.carpetas.length; i++) {
       console.log(obj.carpetas[i]);
       
-    }*/
+    }
     for (let i = 0; i < obj.archivos.length; i++) {
       console.log(obj.archivos[i]);
       
