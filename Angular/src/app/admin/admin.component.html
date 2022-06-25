@@ -10,9 +10,31 @@
                 </div>
                 
                 <div>
-                    <button type="button"  class="btn btn-info" (click)="consulta()"><i class="fa-solid fa-file"></i> Nuevo</button>&nbsp;
-                    
-                </div>       
+                    <input type="file" (change)="abrir($event)" class="btn btn-primary">
+                </div> 
+
+                <div class="row">
+                    <br>
+                </div>  
+
+                <div class="row">
+                    <div class="col-xl-15 col-lg-14">
+                        <div class="card shadow mb-4">
+                            <div class="card shadow ">
+                                <div class="card-header py-3 d-flex ">
+                                    <div class="p-2 py-3"><h6 class="m-0 font-weight-bold text-primary"><i class="fa fa-solid fa-code"></i> Arbol</h6></div>
+                                                   
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="20" [(ngModel)]=this.contenido ></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
             </div>
         </div>
     </div>
