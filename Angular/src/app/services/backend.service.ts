@@ -17,4 +17,12 @@ export class BackendService {
   Login(cuerpo:any){
     return this.http.post(`${this.URL}/Login`, cuerpo)
   }
+
+  Cargar(cuerpo:any){
+    return this.http.post(`${this.URL}/convIngresar`, cuerpo)
+  }
+
+  Obtener(){
+    return this.http.get(`${this.URL}/obtenerCarpetas`)
+  }
 }

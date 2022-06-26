@@ -8,5 +8,8 @@ router.post("/Login", control.login)
 router.post("/habilitar",control.habilitar)
 router.post("/reportar",control.reportar)
 router.post("/eliminarU",control.eliminarU)
+router.post("/convIngresar",control.convertirIngresar)
+router.get("/obtenerCarpetas",control.obtenerCarpetas)
+
 
 module.exports = router

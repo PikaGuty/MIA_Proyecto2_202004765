@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BarraComponent } from './barra/barra.component';
@@ -17,6 +18,7 @@ import { RegistroComponent } from './registro/registro.component';
 import { CuentaAltaComponent } from './cuenta-alta/cuenta-alta.component';
 import { CuentaBajaComponent } from './cuenta-baja/cuenta-baja.component';
 import { CuentaHabilitarComponent } from './cuenta-habilitar/cuenta-habilitar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { CuentaHabilitarComponent } from './cuenta-habilitar/cuenta-habilitar.co
     BrowserModule,
     AppRoutingModule, 
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,6 @@
 
 var usuarios = require('./LogUsuarios');
+var archivs = require('./Archvos')
 const { stderr } = require('process');
 
 
@@ -25,4 +26,17 @@ exports.reportar = async(req, res)=>{
 
 exports.eliminarU = async(req, res)=>{
     res.json({Respuesta:usuarios.eliminarUsuario(req.body)})
+}
+
+exports.eliminarU = async(req, res)=>{
+    res.json({Respuesta:usuarios.eliminarUsuario(req.body)})
+}
+
+exports.convertirIngresar = async(req,res)=>{
+    archivs.convertir_ingresar(req.body)
+    res.json({Respuesta:"Sistema de archivos sincronizado"})
+}
+
+exports.obtenerCarpetas = async(req,res)=>{
+    res.json(archivs.obtenerCarpetas())
 }
