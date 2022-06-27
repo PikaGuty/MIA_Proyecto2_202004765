@@ -22,13 +22,35 @@
                         <div class="card shadow mb-4">
                             <div class="card shadow ">
                                 <div class="card-header py-3 d-flex ">
-                                    <div class="p-2 py-3"><h3 class="m-0 font-weight-bold text-primary"><i class="fa fa-solid fa-code"></i> Arbol</h3></div>
+                                    <div class="p-2 py-3"><h3 class="m-0 font-weight-bold text-primary"><i class="fa fa-solid fa-code"></i> Archivos</h3></div>
                                                    
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group">
+
+                                        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                                            <!-- This is the tree node template for leaf nodes -->
+                                            <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+                                              <!-- use a disabled button to provide padding for tree leaf -->
+                                              <button mat-icon-button disabled></button>
+                                              {{node.name}}
+                                            </mat-tree-node>
+                                            <!-- This is the tree node template for expandable nodes -->
+                                            <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+                                              <button mat-icon-button matTreeNodeToggle
+                                                      [attr.aria-label]="'Toggle ' + node.name">
+                                                <mat-icon class="mat-icon-rtl-mirror">
+                                                  {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                                </mat-icon>
+                                              </button>
+                                              {{node.name}}
+                                              &nbsp;&nbsp;<button type="button" class="btn btn-success btn-sm" (click)="ver(node.name)" style="border-radius: 48%;"><i class="fa fa-solid fa-plus"></i></button>
+                                              &nbsp;&nbsp;<button type="button" class="btn btn-primary btn-sm" (click)="ver(node.name)" style="border-radius: 48%;"><i class="fa fa-solid fa-pencil"></i></button>
+                                              
+                                            </mat-tree-node>
+                                          </mat-tree>
+                                          
                                         
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="20" [(ngModel)]=this.contenido ></textarea>
                                     </div>
                                 </div>
                             </div>

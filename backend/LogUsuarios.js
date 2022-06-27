@@ -94,6 +94,23 @@ function aceptarUsuario(usuario){
     return "No se encontró"
 }
 
+function retornarUsuarios(valor){
+    console.log(valor)
+    const fs = require("fs");
+    let usersjson = fs.readFileSync("./datos.json","utf-8"); //Leyendo archivo JSON
+    let cont = JSON.parse(usersjson); //Parseando a JSON
+
+    var usrs = cont.usuarios; //accediendo a elemento usuarios
+
+    var usuarios=[]
+    for (let i = 0; i < usrs.normales.length; i++) {
+        if(usrs.normales[i].status ==valor.status){
+            usuarios.push(usrs.normales[i])
+        }
+    }
+    return usuarios
+}
+
 function reportarUsuario(usuario){
     const fs = require("fs");
     let usersjson = fs.readFileSync("./datos.json","utf-8"); //Leyendo archivo JSON
@@ -172,7 +189,7 @@ function enviarCorreo(correo, asunto, contenido){
       service: 'gmail',
       auth: {
         user: 'fubox.admi@gmail.com',
-        pass: ''
+        pass: 'urnenezyxrxmdejk'
       }
     });
 
@@ -192,4 +209,4 @@ function enviarCorreo(correo, asunto, contenido){
     });
 }
 
-module.exports={obtener, ingresarUsuario, login, aceptarUsuario, reportarUsuario, eliminarUsuario}
+module.exports={obtener, ingresarUsuario, login, aceptarUsuario, reportarUsuario, eliminarUsuario, retornarUsuarios}

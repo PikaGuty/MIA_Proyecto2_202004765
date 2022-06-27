@@ -22,6 +22,8 @@ import { LoginComponent } from './login/login.component';
 import { PlantillaComponent } from './plantilla/plantilla.component';
 import { RegistroComponent } from './registro/registro.component';
 import { CuentaAltaComponent } from './cuenta-alta/cuenta-alta.component';
+import { MatDialogModule } from "@angular/material/dialog";
+import { PopUpPropietarioComponent } from './pop-up-propietario/pop-up-propietario.component'
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import { CuentaAltaComponent } from './cuenta-alta/cuenta-alta.component';
     LoginComponent,
     PlantillaComponent,
     RegistroComponent,
-    CuentaAltaComponent
+    CuentaAltaComponent,
+    PopUpPropietarioComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,7 +49,8 @@ import { CuentaAltaComponent } from './cuenta-alta/cuenta-alta.component';
     MatIconModule,
     MatButtonModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

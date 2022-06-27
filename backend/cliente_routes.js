@@ -10,6 +10,7 @@ router.post("/reportar",control.reportar)
 router.post("/eliminarU",control.eliminarU)
 router.post("/convIngresar",control.convertirIngresar)
 router.get("/obtenerCarpetas",control.obtenerCarpetas)
+router.post("/obtenerUsuarios",control.obtenerUsuarios)
 
 
 module.exports = router

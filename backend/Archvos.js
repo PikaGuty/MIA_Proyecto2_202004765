@@ -8,7 +8,7 @@ function convertir_ingresar(obj){
     json = JSON.parse(convertir(obj.root.inicio,obj.carpetas,obj.archivos))
     //njson=JSON.stringify(njson[0])
 
-    cont.carpetas=json[0]
+    cont.carpetas=json
 
     usersjson = JSON.stringify(cont);
     fs.writeFileSync("./datos.json",usersjson,"utf-8");
@@ -25,7 +25,7 @@ function convertir(anterior,carpetas,archivos){
     }
     for(j=0; j<archivos.length;j++){
         if(archivos[j].padre==anterior){
-            tarray.push({"nombre":archivos[j].nombre,"id":archivos[j].id,"size":archivos[j].size,"fecha":archivos[j].fecha, "contenido":archivos[j].contenido})
+            tarray.push({"nombre":archivos[j].nombre,"id":archivos[j].id,"size":archivos[j].size,"fecha":archivos[j].fecha, "texto":archivos[j].contenido})
         }
     }
     return JSON.stringify(tarray)

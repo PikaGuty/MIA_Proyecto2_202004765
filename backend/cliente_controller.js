@@ -40,3 +40,7 @@ exports.convertirIngresar = async(req,res)=>{
 exports.obtenerCarpetas = async(req,res)=>{
     res.json(archivs.obtenerCarpetas())
 }
+
+exports.obtenerUsuarios = async(req,res)=>{
+    res.json(usuarios.retornarUsuarios(req.body))
+}

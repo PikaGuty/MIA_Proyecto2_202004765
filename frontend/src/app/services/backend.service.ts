@@ -25,4 +25,14 @@ export class BackendService {
   Obtener(){
     return this.http.get(`${this.URL}/obtenerCarpetas`)
   }
+
+  ObtenerUsuarios(cuerpo:any){
+    return this.http.post(`${this.URL}/obtenerUsuarios`,cuerpo)
+  }
+
+  HabilitarUsuarios(cuerpo:any){
+    return this.http.post(`${this.URL}/habilitar`,cuerpo)
+  }
+  
+
 }
