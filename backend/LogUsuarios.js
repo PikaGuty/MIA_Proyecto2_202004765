@@ -111,6 +111,23 @@ function retornarUsuarios(valor){
     return usuarios
 }
 
+function retornarUsuariosH(){
+    const fs = require("fs");
+    let usersjson = fs.readFileSync("./datos.json","utf-8"); //Leyendo archivo JSON
+    let cont = JSON.parse(usersjson); //Parseando a JSON
+
+    var usrs = cont.usuarios; //accediendo a elemento usuarios
+
+    var usuarios=[]
+    for (let i = 0; i < usrs.normales.length; i++) {
+        if(usrs.normales[i].status =="1"){
+            list = {value: usrs.normales[i].nusr, viewValue: usrs.normales[i].nusr}
+            usuarios.push(list)
+        }
+    }
+    return usuarios
+}
+
 function reportarUsuario(usuario){
     const fs = require("fs");
     let usersjson = fs.readFileSync("./datos.json","utf-8"); //Leyendo archivo JSON
@@ -209,4 +226,4 @@ function enviarCorreo(correo, asunto, contenido){
     });
 }
 
-module.exports={obtener, ingresarUsuario, login, aceptarUsuario, reportarUsuario, eliminarUsuario, retornarUsuarios}
+module.exports={obtener, ingresarUsuario, login, aceptarUsuario, reportarUsuario, eliminarUsuario, retornarUsuarios, retornarUsuariosH}

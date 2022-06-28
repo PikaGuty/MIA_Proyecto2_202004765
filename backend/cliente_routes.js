@@ -11,6 +11,10 @@ router.post("/eliminarU",control.eliminarU)
 router.post("/convIngresar",control.convertirIngresar)
 router.get("/obtenerCarpetas",control.obtenerCarpetas)
 router.post("/obtenerUsuarios",control.obtenerUsuarios)
+router.get("/obtenerUsuariosH",control.obtenerUsuariosH)
+router.get("/formatearJSON",control.formatearJSON)
+router.post("/getFile",control.getFile)
+router.post("/cambiarProp",control.cambiarProp)
 
 
 module.exports = router

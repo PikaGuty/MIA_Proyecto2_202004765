@@ -34,5 +34,21 @@ export class BackendService {
     return this.http.post(`${this.URL}/habilitar`,cuerpo)
   }
   
+  ObtenerUsuariosH(){
+    return this.http.get(`${this.URL}/obtenerUsuariosH`)
+  }
+
+  formatearJSON(){
+    return this.http.get(`${this.URL}/formatearJSON`)
+  }
+
+  getFile(cuerpo:any){
+    return this.http.post(`${this.URL}/getFile`,cuerpo)
+  }
+
+  cambiarProp(cuerpo:any){
+    return this.http.post(`${this.URL}/cambiarProp`,cuerpo)
+  }
+  
 
 }

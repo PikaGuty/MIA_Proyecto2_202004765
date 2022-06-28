@@ -24,6 +24,8 @@ import { RegistroComponent } from './registro/registro.component';
 import { CuentaAltaComponent } from './cuenta-alta/cuenta-alta.component';
 import { MatDialogModule } from "@angular/material/dialog";
 import { PopUpPropietarioComponent } from './pop-up-propietario/pop-up-propietario.component'
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { PopUpPropietarioComponent } from './pop-up-propietario/pop-up-propietar
     RegistroComponent,
     CuentaAltaComponent,
     PopUpPropietarioComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -50,7 +53,9 @@ import { PopUpPropietarioComponent } from './pop-up-propietario/pop-up-propietar
     MatButtonModule,
     FormsModule,
     HttpClientModule,
-    MatDialogModule
+    MatDialogModule,
+    MatFormFieldModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

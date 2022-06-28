@@ -1,3 +1,16 @@
-<h2>Hola Mundo</h2>
+<h1 mat-dialog-title>Permisos de {{data.name}}</h1>
+<div mat-dialog-content>
+  <p>Propietario actual: {{this.propietario}}</p>
+ <br>
+   
+    <mat-select [(ngModel)]="selectedUSR" name="food">
+        <mat-option *ngFor="let usr of usuarios" [value]="usr.value">
+        {{usr.viewValue}} 
+        </mat-option>
+    </mat-select>
 
-<button>press</button>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button color="accent" [mat-dialog-close]="selectedUSR" cdkFocusInitial>Modificar</button>
+</div>

@@ -44,3 +44,22 @@ exports.obtenerCarpetas = async(req,res)=>{
 exports.obtenerUsuarios = async(req,res)=>{
     res.json(usuarios.retornarUsuarios(req.body))
 }
+
+exports.obtenerUsuariosH = async(req,res)=>{
+    res.json(usuarios.retornarUsuariosH())
+}
+
+exports.formatearJSON = async(req,res)=>{
+    archivs.formatearJSON()
+    res.json({Respuesta:"Se ha formateado el archivo JSON"})
+}
+
+exports.getFile = async(req,res)=>{
+    res.json(archivs.getFile(req.body))
+}
+
+exports.cambiarProp = async(req,res)=>{
+    archivs.cambiarProp(req.body)
+    res.json({Respuesta:"Si"})
+}
+

@@ -3,24 +3,24 @@ import { BackendService } from '../services/backend.service';
 import { Router } from '@angular/router';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
-import { MatDialog } from '@angular/material/dialog';
 import { PopUpPropietarioComponent } from '../pop-up-propietario/pop-up-propietario.component';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
-interface FoodNode {
+interface FNode {
   nombre: string;
   id:string;
   size:string;
   fecha:string;
-  contenido?: FoodNode[];
+  contenido?: FNode[];
 }
 
-var TREE_DATA: FoodNode[] = [];
+var TREE_DATA: FNode[] = [];
 
-/** Flat node with expandable and level information */
 interface ExampleFlatNode {
   expandable: boolean;
   name: string;
   level: number;
+  id: number;
 }
 
 @Component({
@@ -30,12 +30,15 @@ interface ExampleFlatNode {
 })
 export class AdminComponent implements OnInit {
   contenido=""
+
   
-  private _transformer = (node: FoodNode, level: number) => {
+  
+  private _transformer = (node: FNode, level: number) => {
     return {
       expandable: !!node.contenido && node.contenido.length > 0,
       name: node.nombre,
       level: level,
+      id: Number(node.id)
     };
   };
 
@@ -53,7 +56,7 @@ export class AdminComponent implements OnInit {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  constructor(private backend: BackendService, private router: Router, private dialogProp:MatDialog){
+  constructor(private backend: BackendService, private router: Router, public dialog: MatDialog){
     var js:any;
     var resulta;
     this.backend.Obtener().subscribe(
@@ -66,7 +69,7 @@ export class AdminComponent implements OnInit {
       err=>{
         alert("Ocurrió un error")
       }
-    )
+    )  
     
     
   }
@@ -76,11 +79,29 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  ver(a:any){
-    console.log(a)
-    this.dialogProp.open(PopUpPropietarioComponent,{
-      data:"Javier"
-    })
+  openDialog( id: number, nombre:string): void {
+    const dialogRef = this.dialog.open(PopUpPropietarioComponent, {
+      width: '250px',
+      
+      data: {name: nombre,ide:id},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result!=""&&result!="--"&&result!=undefined){
+        var js:any;
+        var cuerpo = {propietario:result,id:id}
+        this.backend.cambiarProp(cuerpo).subscribe(
+          res=>{
+            alert("Nuevo propietario de "+nombre+" es "+result);
+          },
+          err=>{
+            alert("Ocurrió un error")
+          }
+        )  
+        
+      }
+      
+    });
   }
 
   abrir(event:any) {

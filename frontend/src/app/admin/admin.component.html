@@ -28,12 +28,14 @@
                                 <div class="card-body">
                                     <div class="form-group">
 
-                                        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                                        <mat-tree color=primary [dataSource]="dataSource" [treeControl]="treeControl">
                                             <!-- This is the tree node template for leaf nodes -->
                                             <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
                                               <!-- use a disabled button to provide padding for tree leaf -->
                                               <button mat-icon-button disabled></button>
                                               {{node.name}}
+                                              
+                                              &nbsp;&nbsp;<button type="button" class="btn btn-primary btn-sm" (click)="openDialog(node.id,node.name)" style="border-radius: 48%;"><i class="fa fa-solid fa-pencil"></i></button>
                                             </mat-tree-node>
                                             <!-- This is the tree node template for expandable nodes -->
                                             <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
@@ -44,8 +46,8 @@
                                                 </mat-icon>
                                               </button>
                                               {{node.name}}
-                                              &nbsp;&nbsp;<button type="button" class="btn btn-success btn-sm" (click)="ver(node.name)" style="border-radius: 48%;"><i class="fa fa-solid fa-plus"></i></button>
-                                              &nbsp;&nbsp;<button type="button" class="btn btn-primary btn-sm" (click)="ver(node.name)" style="border-radius: 48%;"><i class="fa fa-solid fa-pencil"></i></button>
+                                              <!--&nbsp;&nbsp;<button type="button" class="btn btn-success btn-sm" (click)="ver(node.name)" style="border-radius: 48%;"><i class="fa fa-solid fa-plus"></i></button>
+                                              -->&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-sm" (click)="openDialog(node.id,node.name)" style="border-radius: 48%;"><i class="fa fa-solid fa-pencil"></i></button>
                                               
                                             </mat-tree-node>
                                           </mat-tree>
