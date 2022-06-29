@@ -1,1 +1,39 @@
-<p>datos works!</p>
+<b><h1 mat-dialog-title>Datos de {{data.correo}}</h1></b>
+<div mat-dialog-content>
+     
+ <form>
+    <div class="mb-2">
+        <b><label class="form-label" >Nombre</label></b>
+        <input type="text" class="form-control" name="campo_nombre" [(ngModel)]=this.nombre >
+    </div>
+    <div class="mb-2">
+        <b><label class="form-label" >Apellido</label></b>
+        <input type="text" class="form-control" name="campo_apellido" [(ngModel)]=this.apellido>
+    </div>
+    <!--<div class="mb-2">
+        <b><label class="form-label" >Nombre de usuario</label></b>
+        <input type="text" class="form-control" name="campo_nusr" [(ngModel)]=this.nusr>
+    </div>-->
+    <div class="mb-2">
+        <b><label class="form-label" >Correo</label></b>
+        <input type="email" class="form-control" name="campo_correo" [(ngModel)]=this.correo>
+    </div>
+    <div class="mb-2">
+        <b><label class="form-label" >Teléfono</label></b>
+        <input type="number" class="form-control" name="campo_telefono" [(ngModel)]=this.telefono>
+    </div>
+    <div class="mb-2">
+        <b><label class="form-label" >Contraseña</label></b>
+        <input type="password" class="form-control" name = "password" [(ngModel)]=this.pass>
+    </div>
+    <div class="mb-2">
+        <b><label class="form-label" >Fecha de naciemiento</label></b>
+        <input type="date" class="form-control" name="campo_fnac" [(ngModel)]=this.fnac>
+    </div>
+</form>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button color="accent" [mat-dialog-close]='{"nombre":this.nombre,"apellido":this.apellido,"nusr":this.nusr,"correo":this.correo,"telefono":this.telefono,"pass":this.pass,"fnac":this.fnac,"fcre":this.fcre,"status":this.status}' cdkFocusInitial>Modificar</button>
+</div>

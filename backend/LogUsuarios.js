@@ -214,6 +214,30 @@ function datosUsuario(datos){
     
 }
 
+function modificarUsuario(datos){
+    const fs = require("fs");
+    let usersjson = fs.readFileSync("./datos.json","utf-8"); //Leyendo archivo JSON
+    let cont = JSON.parse(usersjson); //Parseando a JSON
+
+    var usrs = cont.usuarios; //accediendo a elemento usuarios
+
+    for (let i = 0; i < usrs.normales.length; i++) {
+        if(usrs.normales[i].nusr==datos.nusr){
+            usrs.normales[i] = datos;
+            cont.usuarios=usrs; 
+
+            usersjson = JSON.stringify(cont);
+            fs.writeFileSync("./datos.json",usersjson,"utf-8");
+
+            contenidoCorreo="Se han modificado tus datos con éxito";
+            enviarCorreo(datos.correo,"FuBox - Modificando datos", contenidoCorreo);
+            return "Se han modificado los datos"
+        }
+    }
+    return "No se han podido modificar"
+    
+}
+
 function enviarCorreo(correo, asunto, contenido){
     var nodemailer = require('nodemailer');
 
@@ -242,4 +266,4 @@ function enviarCorreo(correo, asunto, contenido){
     });
 }
 
-module.exports={datosUsuario, obtener, ingresarUsuario, login, aceptarUsuario, reportarUsuario, eliminarUsuario, retornarUsuarios, retornarUsuariosH}
+module.exports={modificarUsuario, datosUsuario, obtener, ingresarUsuario, login, aceptarUsuario, reportarUsuario, eliminarUsuario, retornarUsuarios, retornarUsuariosH}

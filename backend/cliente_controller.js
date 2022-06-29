@@ -70,3 +70,7 @@ exports.obtenerDU = async(req,res)=>{
 exports.datosUsuario = async(req,res)=>{
     res.json(usuarios.datosUsuario(req.body))
 }
+
+exports.modificarUsuario = async(req,res)=>{
+    res.json({Respuesta:usuarios.modificarUsuario(req.body)})
+}

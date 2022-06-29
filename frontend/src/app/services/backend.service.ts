@@ -57,4 +57,7 @@ export class BackendService {
   datosUsuario(cuerpo:any){
     return this.http.post(`${this.URL}/datosUsuario`,cuerpo)
   }
-}
+
+  modificarUsuario(cuerpo:any){
+    return this.http.post(`${this.URL}/modificarUsuario`,cuerpo)
+  }}

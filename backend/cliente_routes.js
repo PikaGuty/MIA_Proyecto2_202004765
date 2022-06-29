@@ -17,5 +17,6 @@ router.post("/getFile",control.getFile)
 router.post("/cambiarProp",control.cambiarProp)
 router.post("/obtenerDU",control.obtenerDU)
 router.post("/datosUsuario",control.datosUsuario)
+router.post("/modificarUsuario",control.modificarUsuario)
 
 module.exports = router

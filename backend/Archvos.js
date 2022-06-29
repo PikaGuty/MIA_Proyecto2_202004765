@@ -9,7 +9,7 @@ function convertir_ingresar(obj){
     json = JSON.parse(convertir(obj.root.inicio,obj.carpetas,obj.archivos))
     //njson=JSON.stringify(njson[0])
 
-    cont.carpetas=json
+    cont.carpetas=[{"nombre":"/","id":"0","size":"0","fecha":"", "propietario": "", "colaboradores":[] , "contenido":json}]
 
     usersjson = JSON.stringify(cont);
     fs.writeFileSync("./datos.json",usersjson,"utf-8");
