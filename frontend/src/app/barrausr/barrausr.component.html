@@ -1,8 +1,9 @@
 <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <div class="sidebarr">
         
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="Usuario">
             <i class="fa fa-solid fa-cube"></i>&nbsp;
             <span>FuBox</span>
         </a>
@@ -11,35 +12,37 @@
     <hr class="sidebar-divider my-0">
 
     <li class="nav-item ">
-        <a class="nav-link" href="editor">
-            <i class="fa fa-solid fa-code"></i>
-            <span>Editor</span>
+        <a class="nav-link" href="Datos">
+            <i class="fa fa-solid fa-id-card"></i>
+            <span>Correo: {{this.correo}}</span>
         </a>
     </li>
 
     <hr class="sidebar-divider">
-
+    
     <div class="sidebar-heading">
-        Reportes
+        Funcionalidades
     </div>
+    <li class="nav-item ">
+        <a class="nav-link" href="Usuario">
+            <i class="fa fa-solid fa-folder"></i>
+            <span>Mi unidad</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="Colab">
+            <i class="fa fa-solid fa-share"></i>
+            <span>Compartidos conmigo</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="Reportar">
+            <i class="fa fa-solid fa-ban"></i>
+            <span>Reportar usuarios</span></a>
+    </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="errores">
-            <i class="fa fa-solid fa-bug"> </i>
-            <span>Reporte de Errores</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="AST">
-            <i class="fa fa-solid fa-sitemap"></i>
-            <span>Árbol AST</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="simbolos">
-            <i class="fa fa-fw fa-table"></i>
-            <span>Tabla de Símbolos</span></a>
-    </li>
     <li class="nav-item bajo">
-        <button type="button" class="btn btn-danger">Salir</button>
+        <swal #deleteSwal [swalOptions]="{ title: 'Está seguro que desea salir?', text: 'Si sale deberá volver a loggearse', icon: 'warning', showCancelButton: true,confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Salir', cancelButtonText:'Cancelar' }"></swal>
+        <button type="button"  class="btn btn-danger" [swal]="deleteSwal" (confirm)="salir()" >Salir</button>
     </li>
 </div>
 

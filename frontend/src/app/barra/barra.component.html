@@ -45,12 +45,11 @@
     </li>
 
     <li class="nav-item bajo">
-        
-        <button type="button" class="btn btn-danger">Salir</button>
+        <swal #deleteSwal [swalOptions]="{ title: 'Está seguro que desea salir?', text: 'Si sale deberá volver a loggearse', icon: 'warning', showCancelButton: true,confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Salir', cancelButtonText:'Cancelar' }"></swal>
+        <button type="button"  class="btn btn-danger" [swal]="deleteSwal" (confirm)="salir()" >Salir</button>
     </li>
     <li class="" style="position: absolute;bottom: 0px;" >
         <button type="button" class="btn btn-warning btn-sm" (click)="formatear()" style="font-size: 8px;">formatear</button>
-        
     </li>
     
 </div>

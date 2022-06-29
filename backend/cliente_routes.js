@@ -15,6 +15,7 @@ router.get("/obtenerUsuariosH",control.obtenerUsuariosH)
 router.get("/formatearJSON",control.formatearJSON)
 router.post("/getFile",control.getFile)
 router.post("/cambiarProp",control.cambiarProp)
-
+router.post("/obtenerDU",control.obtenerDU)
+router.post("/datosUsuario",control.datosUsuario)
 
 module.exports = router

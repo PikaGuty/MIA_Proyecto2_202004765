@@ -19,7 +19,9 @@ export class LoginComponent implements OnInit {
 
   ingresar(){
     let js:any
+    let corrreo="";
     if((this.correo != "" && this.pass != "" )){
+      corrreo=this.correo;
       //console.log(this.nombre+"\n"+this.apellido+"\n"+this.nusr+"\n"+this.correo+"\n"+this.telefono+"\n"+this.pass+"\n"+this.fnac+"\n"+this.fcre+"\n"+this.status)
       let obj = JSON.parse('{"correo": "'+this.correo+'", "pass": "'+this.pass+'"}');
 
@@ -30,6 +32,10 @@ export class LoginComponent implements OnInit {
           alert(js.Respuesta)
           if(js.Respuesta=="Bienvenido Administrador"){
             this.router.navigate(['/Admin']);
+            sessionStorage.setItem('correo', ""+corrreo+"");
+          }else if(js.Respuesta=="Bienvenido"){
+            sessionStorage.setItem('correo', ""+corrreo+"");
+            this.router.navigate(['/Usuario']);
           }
         },
         err=>{

@@ -63,3 +63,10 @@ exports.cambiarProp = async(req,res)=>{
     res.json({Respuesta:"Si"})
 }
 
+exports.obtenerDU = async(req,res)=>{
+    res.json(archivs.obtenerDU(req.body))
+}
+
+exports.datosUsuario = async(req,res)=>{
+    res.json(usuarios.datosUsuario(req.body))
+}

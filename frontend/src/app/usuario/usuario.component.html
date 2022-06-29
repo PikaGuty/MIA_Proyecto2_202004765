@@ -1,0 +1,61 @@
+
+<div >
+    <div id="wrapper" >
+        <app-barrausr></app-barrausr>
+    
+        <div id="content-wrapper" class="d-flex flex-column body" >
+            <div class="container-fluid">
+                <div class="row">
+                    <br>
+                </div>
+                
+
+                <div class="row">
+                    <div class="col-xl-15 col-lg-14">
+                        <div class="card shadow mb-4">
+                            <div class="card shadow ">
+                                <div class="card-header py-3 d-flex ">
+                                    <div class="p-2 py-3"><h3 class="m-0 font-weight-bold text-primary"><i class="fa fa-solid fa-code"></i> Archivos</h3></div>
+                                                   
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+
+                                        <mat-tree color=primary [dataSource]="dataSource" [treeControl]="treeControl">
+                                            <!-- This is the tree node template for leaf nodes -->
+                                            <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+                                              <!-- use a disabled button to provide padding for tree leaf -->
+                                              <button mat-icon-button disabled></button>
+                                              {{node.name}}
+                                              
+                                              &nbsp;&nbsp;<button type="button" class="btn btn-primary btn-sm" (click)="openDialog(node.id,node.name)" style="border-radius: 48%;">&nbsp;<i class="fa fa-solid fa-info"></i>&nbsp;</button>
+                                              &nbsp;&nbsp;<button type="button" class="btn btn-danger btn-sm" (click)="openDialog(node.id,node.name)" style="border-radius: 48%;"><i class="fa fa-solid fa-trash"></i></button>
+                                            </mat-tree-node>
+                                            <!-- This is the tree node template for expandable nodes -->
+                                            <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+                                              <button mat-icon-button matTreeNodeToggle
+                                                      [attr.aria-label]="'Toggle ' + node.name">
+                                                <mat-icon class="mat-icon-rtl-mirror">
+                                                  {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                                </mat-icon>
+                                              </button>
+                                              {{node.name}}
+                                              &nbsp;&nbsp;<button type="button" class="btn btn-success btn-sm"  style="border-radius: 48%;"><i class="fa fa-solid fa-file"></i></button>
+                                              &nbsp;&nbsp;<button type="button" class="btn btn-warning btn-sm"  style="border-radius: 48%;"><i class="fa fa-solid fa-folder"></i></button>
+                                              &nbsp;&nbsp;<button type="button" class="btn btn-primary btn-sm" (click)="openDialog(node.id,node.name)" style="border-radius: 48%;"><i class="fa fa-solid fa-pencil"></i></button>
+                                              &nbsp;&nbsp;<button type="button" class="btn btn-danger btn-sm" (click)="openDialog(node.id,node.name)" style="border-radius: 48%;"><i class="fa fa-solid fa-trash"></i></button>
+                                            </mat-tree-node>
+                                          </mat-tree>
+                                          
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </div>
+    <app-foot></app-foot>
+</div>

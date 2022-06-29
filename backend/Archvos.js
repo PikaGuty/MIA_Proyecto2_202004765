@@ -130,4 +130,40 @@ function obtenerCarpetas(){
 
     return cont.carpetas;
 }
-module.exports={convertir_ingresar,obtenerCarpetas,formatearJSON,getFile,cambiarProp}
+
+function obtenerDU(body){
+    const fs = require("fs");
+    let usersjson = fs.readFileSync("./datos.json","utf-8"); //Leyendo archivo JSON
+    let cont = JSON.parse(usersjson);
+    let propiedades = []
+
+    buscarUser(body.propietario,cont.carpetas,propiedades)
+
+    return propiedades
+}
+
+function buscarUser(usr,archivos,propiedades){
+    var arch=null;
+    var ar=null;
+    for (let i = 0; i < archivos.length; i++) {
+        console.log(usr+" = "+archivos[i].propietario)
+        if(archivos[i].contenido){
+            console.log(archivos[i].nombre)
+            if(usr==archivos[i].propietario){
+                return archivos[i]
+            }
+            ar=buscarUser(usr,archivos[i].contenido,propiedades)
+            if(ar!=null){
+                propiedades.push(ar)
+            }
+        }else{
+            if(usr==archivos[i].propietario){
+                return archivos[i]
+            }
+        }
+    }
+    return arch
+}
+
+
+module.exports={convertir_ingresar,obtenerCarpetas,formatearJSON,getFile,cambiarProp,obtenerDU}

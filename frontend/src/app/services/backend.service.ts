@@ -50,5 +50,11 @@ export class BackendService {
     return this.http.post(`${this.URL}/cambiarProp`,cuerpo)
   }
   
+  obtenerDU(cuerpo:any){
+    return this.http.post(`${this.URL}/obtenerDU`,cuerpo)
+  }
 
+  datosUsuario(cuerpo:any){
+    return this.http.post(`${this.URL}/datosUsuario`,cuerpo)
+  }
 }

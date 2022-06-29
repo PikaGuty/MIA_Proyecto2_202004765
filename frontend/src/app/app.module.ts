@@ -4,6 +4,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import {MatButtonModule} from "@angular/material/button"
 import {MatIconModule} from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -26,6 +27,10 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { PopUpPropietarioComponent } from './pop-up-propietario/pop-up-propietario.component'
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
+import { UsuarioComponent } from './usuario/usuario.component';
+import { ColabComponent } from './colab/colab.component';
+import { ReportarComponent } from './reportar/reportar.component';
+import { DatosComponent } from './datos/datos.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +47,10 @@ import {MatSelectModule} from '@angular/material/select';
     RegistroComponent,
     CuentaAltaComponent,
     PopUpPropietarioComponent,
+    UsuarioComponent,
+    ColabComponent,
+    ReportarComponent,
+    DatosComponent,
     
   ],
   imports: [
@@ -55,7 +64,8 @@ import {MatSelectModule} from '@angular/material/select';
     HttpClientModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    SweetAlert2Module.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

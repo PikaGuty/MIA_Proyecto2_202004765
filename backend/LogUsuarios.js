@@ -198,6 +198,22 @@ function login(datos){
     }
 }
 
+function datosUsuario(datos){
+    const fs = require("fs");
+    let usersjson = fs.readFileSync("./datos.json","utf-8"); //Leyendo archivo JSON
+    let cont = JSON.parse(usersjson); //Parseando a JSON
+
+    var usrs = cont.usuarios; //accediendo a elemento usuarios
+
+    for (let i = 0; i < usrs.normales.length; i++) {
+        if(usrs.normales[i].correo==datos.correo){
+            return usrs.normales[i]
+        }
+    }
+    return null
+    
+}
+
 function enviarCorreo(correo, asunto, contenido){
     var nodemailer = require('nodemailer');
 
@@ -226,4 +242,4 @@ function enviarCorreo(correo, asunto, contenido){
     });
 }
 
-module.exports={obtener, ingresarUsuario, login, aceptarUsuario, reportarUsuario, eliminarUsuario, retornarUsuarios, retornarUsuariosH}
+module.exports={datosUsuario, obtener, ingresarUsuario, login, aceptarUsuario, reportarUsuario, eliminarUsuario, retornarUsuarios, retornarUsuariosH}

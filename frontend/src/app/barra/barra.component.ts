@@ -33,4 +33,9 @@ export class BarraComponent implements OnInit {
       }
     ) 
   }
+
+  salir(){
+    this.router.navigate(['/Login']);
+    sessionStorage.removeItem('correo');
+  }
 }
