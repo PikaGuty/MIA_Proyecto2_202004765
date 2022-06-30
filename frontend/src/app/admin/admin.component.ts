@@ -103,7 +103,7 @@ export class AdminComponent implements OnInit {
       
     });
   }
-
+ 
   abrir(event:any) {
     const file = event.target.files[0];
    

@@ -33,9 +33,15 @@ export class LoginComponent implements OnInit {
           if(js.Respuesta=="Bienvenido Administrador"){
             this.router.navigate(['/Admin']);
             sessionStorage.setItem('correo', ""+corrreo+"");
+          }else if(js.Respuesta=="Su cuenta aún no ha sido habilitada por el administrador"){
+            this.router.navigate(['/Calmao'])
           }else if(js.Respuesta=="Bienvenido"){
             sessionStorage.setItem('correo', ""+corrreo+"");
             this.router.navigate(['/Usuario']);
+          }else if(js.Respuesta=="Ha llegado a su cuenta un correo para establecer una contraseña nueva"){
+            
+          }else if(js.Respuesta=="Correo y/o contraseña incorrectos"){
+            this.router.navigate(['/Denegao'])
           }
         },
         err=>{

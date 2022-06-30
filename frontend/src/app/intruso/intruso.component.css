@@ -23,7 +23,7 @@
   }
   
   .notfound {
-    max-width: 520px;
+    max-width: 670px;
     width: 100%;
     text-align: center;
     line-height: 1.4;
@@ -35,8 +35,8 @@
   
   .notfound .notfound-404 h1 {
     font-family: 'Montserrat', sans-serif;
-    font-size: 146px;
-    font-weight: 700;
+    font-size: 100px;
+    font-weight: 900;
     margin: 0px;
     color: #232323;
   }

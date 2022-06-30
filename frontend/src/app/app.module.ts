@@ -31,6 +31,9 @@ import { UsuarioComponent } from './usuario/usuario.component';
 import { ColabComponent } from './colab/colab.component';
 import { ReportarComponent } from './reportar/reportar.component';
 import { DatosComponent } from './datos/datos.component';
+import { IntrusoComponent } from './intruso/intruso.component';
+import { CalmaoComponent } from './calmao/calmao.component';
+import { AcsDenegadoComponent } from './acs-denegado/acs-denegado.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,9 @@ import { DatosComponent } from './datos/datos.component';
     ColabComponent,
     ReportarComponent,
     DatosComponent,
+    IntrusoComponent,
+    CalmaoComponent,
+    AcsDenegadoComponent,
     
   ],
   imports: [
@@ -67,7 +73,8 @@ import { DatosComponent } from './datos/datos.component';
     MatSelectModule,
     SweetAlert2Module.forRoot()
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

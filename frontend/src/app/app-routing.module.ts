@@ -12,12 +12,34 @@ import { UsuarioComponent } from './usuario/usuario.component';
 import { ColabComponent } from './colab/colab.component';
 import { ReportarComponent } from './reportar/reportar.component';
 import { DatosComponent } from './datos/datos.component';
+import { AutenticaAdminGuard } from './autentica-admin.guard';
+import { IntrusoComponent } from './intruso/intruso.component';
+import { AutenticaUsrGuard } from './autentica-usr.guard';
+import { CalmaoComponent } from './calmao/calmao.component';
+import { AcsDenegadoComponent } from './acs-denegado/acs-denegado.component';
+
 
 const routes: Routes = [
-  
+
 {
   path:'E404',
   component: E404Component
+  
+},
+{
+  path:'Intruso',
+  component: IntrusoComponent
+  
+},
+{
+  path:'Calmao',
+  component: CalmaoComponent
+  
+},
+{
+  path:'Denegao',
+  component: AcsDenegadoComponent
+  
 },
 {
   path:'Login',
@@ -29,11 +51,13 @@ const routes: Routes = [
 },
 {
   path:'Admin',
-  component: AdminComponent
+  component: AdminComponent,
+  canActivate:[AutenticaAdminGuard]
 },
 {
   path:'Usuario',
-  component: UsuarioComponent
+  component: UsuarioComponent,
+  canActivate:[AutenticaUsrGuard]
 },
 {
   path:'Registro',
@@ -41,27 +65,33 @@ const routes: Routes = [
 },
 {
   path:'CuentaAlta',
-  component:CuentaAltaComponent
+  component:CuentaAltaComponent,
+  canActivate:[AutenticaAdminGuard]
 },
 {
   path:'CuentaBaja',
-  component:CuentaBajaComponent
+  component:CuentaBajaComponent,
+  canActivate:[AutenticaAdminGuard]
 },
 {
   path:'CuentaHabilitar',
-  component:CuentaHabilitarComponent
+  component:CuentaHabilitarComponent,
+  canActivate:[AutenticaAdminGuard]
 },
 {
   path:'Colab',
-  component:ColabComponent
+  component:ColabComponent,
+  canActivate:[AutenticaUsrGuard]
 },
 {
   path:'Reportar',
-  component:ReportarComponent
+  component:ReportarComponent,
+  canActivate:[AutenticaUsrGuard]
 },
 {
   path:'Datos',
-  component:DatosComponent
+  component:DatosComponent,
+  canActivate:[AutenticaUsrGuard]
 },
 {
   path:'**',
