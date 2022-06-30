@@ -5,6 +5,7 @@ import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import { PopUpPropietarioComponent } from '../pop-up-propietario/pop-up-propietario.component';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 interface FNode {
   nombre: string;
@@ -21,6 +22,7 @@ interface ExampleFlatNode {
   name: string;
   level: number;
   id: number;
+  carpeta:boolean;
 }
 
 @Component({
@@ -30,6 +32,7 @@ interface ExampleFlatNode {
 })
 export class UsuarioComponent implements OnInit {
   contenido=""
+  nuevoNombre=""
   datosUsr:any;
   
   
@@ -38,7 +41,8 @@ export class UsuarioComponent implements OnInit {
       expandable: !!node.contenido && node.contenido.length > 0,
       name: node.nombre,
       level: level,
-      id: Number(node.id)
+      id: Number(node.id),
+      carpeta: ( node.contenido? true : false)
     };
   };
 
@@ -151,4 +155,211 @@ export class UsuarioComponent implements OnInit {
     }
     fileReader.readAsText(file)   
   }
+
+  eliminar(id:number, nombre:string){
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: 'Desea eliminar '+nombre+'?',
+      text: "Al eliminarlo también eliminará todo su contenido",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        swalWithBootstrapButtons.fire(
+          'Eliminado',
+          'Se ha eliminado '+nombre,
+          'success'
+        )
+      } else if (
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelado',
+          '',
+          'error'
+        )
+      }
+    })
+  }
+
+  async editar(id:number, nombre:string){
+    
+    const { value: nom } = await Swal.fire({
+      title: 'Editar carpeta',
+      input: 'text',
+      inputLabel: 'Nuevo nombre de la carpeta',
+      inputPlaceholder: 'Ingresa el nombre para la carpeta',
+      showCancelButton: true, 
+      confirmButtonText: 'Editar', 
+      cancelButtonText:'Cancelar'
+    })
+    
+    if (nom) {
+      Swal.fire(
+        'Modificada',
+        `Nombre de la carpeta: ${nom}`,
+        'success'
+      )
+    }
+  }
+
+  async nuevaCarpeta(id:number){
+    const { value: nombre } = await Swal.fire({
+      title: 'Nueva carpeta',
+      input: 'text',
+      inputLabel: 'Nombre de la carpeta',
+      inputPlaceholder: 'Ingresa el nombre para la carpeta',
+      showCancelButton: true, 
+      confirmButtonText: 'Crear', 
+      cancelButtonText:'Cancelar'
+    })
+    
+    if (nombre) {
+
+      let json={
+        id:String(id),
+        js:{
+          nombre:nombre,
+          id:"1",
+          size:"0",
+          fecha:formatDate(new Date()),
+          propietario:"",
+          colaboradores:[],
+          contenido:[]
+        }
+      }
+
+      var js:any;
+        this.backend.nuevoArchCarp(json).subscribe(
+          res=>{
+            alert("Se ha actualizado la información");
+          },
+          err=>{
+            alert("Ocurrió un error")
+          }
+        )
+
+      Swal.fire(
+        'Creada',
+        `Nombre de la carpeta: ${nombre}`,
+        'success'
+      )
+    }
+  }
+
+  async nuevoArchivo(id:number){
+    const { value: nombre } = await Swal.fire({
+      title: 'Nueva Archivo',
+      input: 'text',
+      inputLabel: 'Nombre del archivo',
+      inputPlaceholder: 'Ingresa el nombre para el archivo',
+      showCancelButton: true, 
+      confirmButtonText: 'Siguiente', 
+      cancelButtonText:'Cancelar'
+      
+    })
+
+    const { value: text } = await Swal.fire({
+      input: 'textarea',
+      inputLabel: 'Contenido',
+      inputPlaceholder: 'Contenido del archivo',
+      inputAttributes: {
+        'aria-label': 'Contenido del archivo'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Crear', 
+      cancelButtonText:'Cancelar'
+    })
+    
+    if (nombre&&text) {
+
+      let json={
+        id:String(id),
+        js:{
+          nombre:nombre,
+          id:"1",
+          size:"0",
+          fecha:formatDate(new Date()),
+          propietario:"",
+          colaboradores:[],
+          texto:text
+        }
+      }
+
+      var js:any;
+        this.backend.nuevoArchCarp(json).subscribe(
+          res=>{
+            alert("Se ha actualizado la información");
+          },
+          err=>{
+            alert("Ocurrió un error")
+          }
+        )
+      
+      Swal.fire(
+        'Creada',
+        `Nombre del archivo: ${nombre}`,
+        'success'
+      )
+
+    }
+  }
+
+  async compartir(id:number, nombre:string){
+    const { value: fruit } = await Swal.fire({
+      title: 'Select field validation',
+      input: 'select',
+      inputOptions: {
+        'Fruits': {
+          apples: 'Apples',
+          bananas: 'Bananas',
+          grapes: 'Grapes',
+          oranges: 'Oranges'
+        },
+        'Vegetables': {
+          potato: 'Potato',
+          broccoli: 'Broccoli',
+          carrot: 'Carrot'
+        },
+        'icecream': 'Ice cream'
+      },
+      inputPlaceholder: 'Select a fruit',
+      showCancelButton: true,
+      
+    })
+    
+    if (fruit) {
+      Swal.fire(`You selected: ${fruit}`)
+    }
+  }
+}
+
+function formatDate(date: Date) {
+  return (
+    [
+      date.getFullYear(),
+      padTo2Digits(date.getMonth() + 1),
+      padTo2Digits(date.getDate()),
+    ].join('-') +
+    ' ' +
+    [
+      padTo2Digits(date.getHours()),
+      padTo2Digits(date.getMinutes()),
+      padTo2Digits(date.getSeconds()),
+    ].join(':')
+  );
+}
+
+function padTo2Digits(num: number) {
+  return num.toString().padStart(2, '0');
 }

@@ -61,6 +61,45 @@ function buscarID(id,archivos){
     return arch
 }
 
+function nuevoArchCarp(body){
+    const fs = require("fs");
+    let usersjson = fs.readFileSync("./datos.json","utf-8"); //Leyendo archivo JSON
+    let cont = JSON.parse(usersjson); //Parseando a JSON
+    
+    //console.log(body.id)
+    //console.log("AAAAAAAAAAAAa")
+    //console.log(body.js)
+    res = bNuevoID(body.id,cont.carpetas,body.js)
+
+    usersjson = JSON.stringify(cont);
+    fs.writeFileSync("./datos.json",usersjson,"utf-8");
+res=null
+    return res
+}
+
+function bNuevoID(id,archivos,js){
+    var arch=null;
+    var ar=null;
+    for (let i = 0; i < archivos.length; i++) {
+        //console.log(archivos[i])
+        if(archivos[i].contenido){
+            if(id==archivos[i].id){
+                js.id=archivos[i].idarchivos[i].contenido.length
+                js.propietario = archivos[i].propietario
+                js.colaboradores = archivos[i].colaboradores
+                archivos[i].contenido.push(js);
+                return archivos[i]
+            }
+            ar=bNuevoID(id,archivos[i].contenido,js)
+            if(ar!=null){
+                arch=ar
+            }
+        }
+    }
+    return arch
+}
+
+
 function cambiarProp(body){
     const fs = require("fs");
     let usersjson = fs.readFileSync("./datos.json","utf-8"); //Leyendo archivo JSON
@@ -166,4 +205,4 @@ function buscarUser(usr,archivos,propiedades){
 }
 
 
-module.exports={convertir_ingresar,obtenerCarpetas,formatearJSON,getFile,cambiarProp,obtenerDU}
+module.exports={convertir_ingresar,obtenerCarpetas,formatearJSON,getFile,cambiarProp,obtenerDU,nuevoArchCarp}

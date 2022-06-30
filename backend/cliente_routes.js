@@ -18,5 +18,6 @@ router.post("/cambiarProp",control.cambiarProp)
 router.post("/obtenerDU",control.obtenerDU)
 router.post("/datosUsuario",control.datosUsuario)
 router.post("/modificarUsuario",control.modificarUsuario)
+router.post("/nuevoArchCarp",control.nuevoArchCarp)
 
 module.exports = router

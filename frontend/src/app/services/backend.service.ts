@@ -60,4 +60,9 @@ export class BackendService {
 
   modificarUsuario(cuerpo:any){
     return this.http.post(`${this.URL}/modificarUsuario`,cuerpo)
-  }}
+  }
+
+  nuevoArchCarp(cuerpo:any){
+    return this.http.post(`${this.URL}/nuevoArchCarp`,cuerpo)
+  }
+}

@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
       this.backend.Login(obj).subscribe(
         res=>{
           js = JSON.parse(JSON.stringify(res)) 
-          alert(js.Respuesta)
+          
           if(js.Respuesta=="Bienvenido Administrador"){
             this.router.navigate(['/Admin']);
             sessionStorage.setItem('correo', ""+corrreo+"");
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
             sessionStorage.setItem('correo', ""+corrreo+"");
             this.router.navigate(['/Usuario']);
           }else if(js.Respuesta=="Ha llegado a su cuenta un correo para establecer una contraseña nueva"){
-            
+            alert(js.Respuesta)
           }else if(js.Respuesta=="Correo y/o contraseña incorrectos"){
             this.router.navigate(['/Denegao'])
           }

@@ -74,3 +74,7 @@ exports.datosUsuario = async(req,res)=>{
 exports.modificarUsuario = async(req,res)=>{
     res.json({Respuesta:usuarios.modificarUsuario(req.body)})
 }
+
+exports.nuevoArchCarp = async(req,res)=>{
+    res.json({Respuesta:archivs.nuevoArchCarp(req.body)})
+}
