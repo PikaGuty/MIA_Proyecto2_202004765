@@ -8,7 +8,7 @@ function convertir_ingresar(obj){
     let usersjson = fs.readFileSync("./datos.json","utf-8"); //Leyendo archivo JSON
     let cont = JSON.parse(usersjson); //Parseando a JSON
 
-    json = JSON.parse(convertir(obj.root.inicio,obj.carpetas,obj.archivos))
+    json = JSON.parse(convertir(obj.root.inicio,obj.carpetas,obj.archivos,0))
     //njson=JSON.stringify(njson[0])
 
     cont.carpetas=[{"nombre":"/","id":"0","size":"0","fecha":"", "propietario": "", "colaboradores":[] , "contenido":json}]
@@ -19,18 +19,27 @@ function convertir_ingresar(obj){
     //return obj;
 }
 
-function convertir(anterior,carpetas,archivos){
+function convertir(anterior,carpetas,archivos,nu){
     let tarray=[];
+    let quedo=0;
     for(i=0; i<carpetas.length;i++){
+        if(nu==0){
+            
+        }
         if(carpetas[i].padre==anterior){
-            tarray.push({"nombre":carpetas[i].nombre,"id":carpetas[i].id,"size":carpetas[i].size,"fecha":carpetas[i].fecha, "propietario": "", "colaboradores":[] , "contenido":JSON.parse(convertir(carpetas[i].id,carpetas,archivos))})
+            quedo=i;
+            tarray.push({"nombre":carpetas[i].nombre,"id":carpetas[i].id,"size":carpetas[i].size,"fecha":carpetas[i].fecha, "propietario": "", "colaboradores":[] , "contenido":JSON.parse(convertir(carpetas[i].id,carpetas,archivos,nu+1))})
+            
+            i=quedo;
         }
     }
     for(j=0; j<archivos.length;j++){
-        if(archivos[j].padre==anterior){
-            tarray.push({"nombre":archivos[j].nombre,"id":archivos[j].id,"size":archivos[j].size,"fecha":archivos[j].fecha, "propietario": "", "colaboradores":[] ,"texto":archivos[j].contenido})
-        }
-    }
+                if(archivos[j].padre==anterior){
+                    tarray.push({"nombre":archivos[j].nombre,"id":archivos[j].id,"size":archivos[j].size,"fecha":archivos[j].fecha, "propietario": "", "colaboradores":[] ,"texto":archivos[j].contenido})
+                }
+            }
+    
+    console.log("Regresa")
     return JSON.stringify(tarray)
 }
 

@@ -354,7 +354,8 @@ export class UsuarioComponent implements OnInit {
       
     })
     
-    if (correo) {     
+    if (correo) {   
+        
       Swal.fire(
         'Creada',
         `Nombre del archivo: ${correo}`,
