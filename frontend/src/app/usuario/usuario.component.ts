@@ -6,6 +6,7 @@ import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import { PopUpPropietarioComponent } from '../pop-up-propietario/pop-up-propietario.component';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { InfoArchComponent } from '../info-arch/info-arch.component';
 
 interface FNode {
   nombre: string;
@@ -97,27 +98,23 @@ export class UsuarioComponent implements OnInit {
   }
 
   openDialog( id: number, nombre:string): void {
-    const dialogRef = this.dialog.open(PopUpPropietarioComponent, {
-      width: '250px',
+    const dialogRef = this.dialog.open(InfoArchComponent, {
+      width: '500px',
       
       data: {name: nombre,ide:id},
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result!=""&&result!="--"&&result!=undefined){
-        var js:any;
-        var cuerpo = {propietario:result,id:id}
-        this.backend.cambiarProp(cuerpo).subscribe(
-          res=>{
-            alert("Nuevo propietario de "+nombre+" es "+result);
-          },
-          err=>{
-            alert("Ocurrió un error")
-          }
-        )  
-        
-      }
-      
+      var js:any;
+      var cuerpo = {id:id,nombre:result.nombre,texto:result.texto}
+      this.backend.modArch(cuerpo).subscribe(
+        res=>{
+          alert("Se ha modificado el archivo");
+        },
+        err=>{
+          alert("Ocurrió un error")
+        }
+      )  
     });
   }
 
@@ -175,6 +172,20 @@ export class UsuarioComponent implements OnInit {
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
+        let json={
+          id:String(id)
+        }
+  
+        var js:any;
+        this.backend.eliminArchCarp(json).subscribe(
+          res=>{
+            //alert("Se ha actualizado la información");
+          },
+          err=>{
+            alert("Ocurrió un error")
+          }
+        )
+
         swalWithBootstrapButtons.fire(
           'Eliminado',
           'Se ha eliminado '+nombre,
@@ -205,6 +216,22 @@ export class UsuarioComponent implements OnInit {
     })
     
     if (nom) {
+
+      let json={
+        id:String(id),
+        nombre:nom
+      }
+
+      var js:any;
+      this.backend.modCarp(json).subscribe(
+        res=>{
+          //alert("Se ha actualizado la información");
+        },
+        err=>{
+          alert("Ocurrió un error")
+        }
+      )
+
       Swal.fire(
         'Modificada',
         `Nombre de la carpeta: ${nom}`,
@@ -242,7 +269,7 @@ export class UsuarioComponent implements OnInit {
       var js:any;
         this.backend.nuevoArchCarp(json).subscribe(
           res=>{
-            alert("Se ha actualizado la información");
+            //alert("Se ha actualizado la información");
           },
           err=>{
             alert("Ocurrió un error")
@@ -342,6 +369,9 @@ export class UsuarioComponent implements OnInit {
       Swal.fire(`You selected: ${fruit}`)
     }
   }
+
+  
+
 }
 
 function formatDate(date: Date) {

@@ -20,15 +20,11 @@ exports.habilitar = async(req, res)=>{
     res.json({Respuesta:usuarios.aceptarUsuario(req.body)})
 }
 
-exports.reportar = async(req, res)=>{
+exports.reportarUsuario = async(req, res)=>{
     res.json({Respuesta:usuarios.reportarUsuario(req.body)})
 }
 
-exports.eliminarU = async(req, res)=>{
-    res.json({Respuesta:usuarios.eliminarUsuario(req.body)})
-}
-
-exports.eliminarU = async(req, res)=>{
+exports.eliminarUsuario = async(req, res)=>{
     res.json({Respuesta:usuarios.eliminarUsuario(req.body)})
 }
 
@@ -77,4 +73,16 @@ exports.modificarUsuario = async(req,res)=>{
 
 exports.nuevoArchCarp = async(req,res)=>{
     res.json({Respuesta:archivs.nuevoArchCarp(req.body)})
+}
+
+exports.eliminArchCarp = async(req,res)=>{
+    res.json({Respuesta:archivs.eliminArchCarp(req.body)})
+}
+
+exports.modCarp = async(req,res)=>{
+    res.json({Respuesta:archivs.modCarp(req.body)})
+}
+
+exports.modArch = async(req,res)=>{
+    res.json({Respuesta:archivs.modArch(req.body)})
 }

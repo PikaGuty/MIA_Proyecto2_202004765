@@ -1,5 +1,7 @@
 const {readFileSync, promises: fsPromises} = require('fs');
 const { arch } = require('os');
+var usuarios = require('./LogUsuarios');
+
 
 function convertir_ingresar(obj){ 
     const fs = require("fs");
@@ -66,14 +68,11 @@ function nuevoArchCarp(body){
     let usersjson = fs.readFileSync("./datos.json","utf-8"); //Leyendo archivo JSON
     let cont = JSON.parse(usersjson); //Parseando a JSON
     
-    //console.log(body.id)
-    //console.log("AAAAAAAAAAAAa")
-    //console.log(body.js)
     res = bNuevoID(body.id,cont.carpetas,body.js)
 
     usersjson = JSON.stringify(cont);
     fs.writeFileSync("./datos.json",usersjson,"utf-8");
-res=null
+
     return res
 }
 
@@ -84,7 +83,7 @@ function bNuevoID(id,archivos,js){
         //console.log(archivos[i])
         if(archivos[i].contenido){
             if(id==archivos[i].id){
-                js.id=archivos[i].idarchivos[i].contenido.length
+                js.id=archivos[i].id+archivos[i].contenido.length
                 js.propietario = archivos[i].propietario
                 js.colaboradores = archivos[i].colaboradores
                 archivos[i].contenido.push(js);
@@ -99,6 +98,117 @@ function bNuevoID(id,archivos,js){
     return arch
 }
 
+function eliminArchCarp(body){
+    const fs = require("fs");
+    let usersjson = fs.readFileSync("./datos.json","utf-8"); //Leyendo archivo JSON
+    let cont = JSON.parse(usersjson); //Parseando a JSON
+    
+    res = bEliminaID(body.id,cont.carpetas)
+
+    usersjson = JSON.stringify(cont);
+    fs.writeFileSync("./datos.json",usersjson,"utf-8");
+    return res
+}
+
+function bEliminaID(id,archivos){
+    var arch=null;
+    var ar=null;
+    for (let i = 0; i < archivos.length; i++) {
+        if(archivos[i].contenido){
+            console.log(id+"="+archivos[i].id)
+            if(id==archivos[i].id){
+                archivos.splice(i, 1);
+                return "Hecho"
+            }
+            ar=bEliminaID(id,archivos[i].contenido)
+            if(ar!=null){
+                arch=ar
+            }
+        }else{
+            if(id==archivos[i].id){
+                archivos.splice(i, 1);
+                return "hecho"
+            }
+        }
+    }
+    return arch
+}
+
+function modCarp(body){
+    const fs = require("fs");
+    let usersjson = fs.readFileSync("./datos.json","utf-8"); //Leyendo archivo JSON
+    let cont = JSON.parse(usersjson); //Parseando a JSON
+    
+    res = bModID(body.id,cont.carpetas,body.nombre)
+
+    usersjson = JSON.stringify(cont);
+    fs.writeFileSync("./datos.json",usersjson,"utf-8");
+    if(res!=null){
+        const dia = new Date();
+        dia.getDate();
+        contenidoCorreo="Se ha modificado el nombre de tu carpeta a "+body.nombre;
+        
+        usuarios.enviarCorreo(retornarCorreo(res),"FuBox - Modificación", contenidoCorreo);
+    }
+    return res
+}
+
+function bModID(id,archivos,nombre){
+    var arch=null;
+    var ar=null;
+    for (let i = 0; i < archivos.length; i++) {
+        if(archivos[i].contenido){
+            console.log(id+"="+archivos[i].id)
+            if(id==archivos[i].id){
+                archivos[i].nombre=nombre;
+                return archivos[i].propietario
+            }
+            ar=bModID(id,archivos[i].contenido,nombre)
+            if(ar!=null){
+                arch=ar
+            }
+        }
+    }
+    return arch
+}
+
+function modArch(body){
+    const fs = require("fs");
+    let usersjson = fs.readFileSync("./datos.json","utf-8"); //Leyendo archivo JSON
+    let cont = JSON.parse(usersjson); //Parseando a JSON
+    
+    res = bModArID(body.id,cont.carpetas,body.nombre,body.texto)
+
+    usersjson = JSON.stringify(cont);
+    fs.writeFileSync("./datos.json",usersjson,"utf-8");
+    if(res!=null){
+        const dia = new Date();
+        dia.getDate();
+        contenidoCorreo="Se ha modificado el archivo "+body.nombre;
+        usuarios.enviarCorreo(retornarCorreo(res),"FuBox - Modificación", contenidoCorreo);
+    }
+    return res
+}
+
+function bModArID(id,archivos,nombre,texto){
+    var arch=null;
+    var ar=null;
+    for (let i = 0; i < archivos.length; i++) {
+        if(archivos[i].contenido){
+            ar=bModArID(id,archivos[i].contenido,nombre,texto)
+            if(ar!=null){
+                arch=ar
+            }
+        }else{
+            if(id==archivos[i].id){
+                archivos[i].nombre=nombre;
+                archivos[i].texto=texto;
+                return archivos[i].propietario
+            }
+        }
+    }
+    return arch
+}
 
 function cambiarProp(body){
     const fs = require("fs");
@@ -204,5 +314,22 @@ function buscarUser(usr,archivos,propiedades){
     return arch
 }
 
+function retornarCorreo(user){
+    const fs = require("fs");
+    let usersjson = fs.readFileSync("./datos.json","utf-8"); //Leyendo archivo JSON
+    let cont = JSON.parse(usersjson); //Parseando a JSON
 
-module.exports={convertir_ingresar,obtenerCarpetas,formatearJSON,getFile,cambiarProp,obtenerDU,nuevoArchCarp}
+    var usrs = cont.usuarios; //accediendo a elemento usuarios
+
+    var usuarios=[]
+    for (let i = 0; i < usrs.normales.length; i++) {
+        if(usrs.normales[i].status =="1"){
+            if(usrs.normales[i].nusr == user){
+                return usrs.normales[i].correo
+            }
+        }
+    }
+    return null;
+}
+
+module.exports={convertir_ingresar,obtenerCarpetas,formatearJSON,getFile,cambiarProp,obtenerDU,nuevoArchCarp,eliminArchCarp, modCarp, modArch}

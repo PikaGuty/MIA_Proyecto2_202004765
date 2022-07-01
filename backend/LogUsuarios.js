@@ -107,6 +107,8 @@ function retornarUsuarios(valor){
         if(usrs.normales[i].status ==valor.status){
             usuarios.push(usrs.normales[i])
         }
+        
+        
     }
     return usuarios
 }
@@ -158,8 +160,7 @@ function eliminarUsuario(usuario){
     for (let i = 0; i < usrs.normales.length; i++) {
         if(usrs.normales[i].nusr==usuario.nusr){
             correo=usrs.normales[i].correo;
-            
-            delete usrs.normales[i];
+            usrs.normales.splice(i, 1);
             usersjson = JSON.stringify(cont);
             fs.writeFileSync("./datos.json",usersjson,"utf-8");
             
@@ -266,4 +267,4 @@ function enviarCorreo(correo, asunto, contenido){
     });
 }
 
-module.exports={modificarUsuario, datosUsuario, obtener, ingresarUsuario, login, aceptarUsuario, reportarUsuario, eliminarUsuario, retornarUsuarios, retornarUsuariosH}
+module.exports={enviarCorreo, modificarUsuario, datosUsuario, obtener, ingresarUsuario, login, aceptarUsuario, reportarUsuario, eliminarUsuario, retornarUsuarios, retornarUsuariosH}

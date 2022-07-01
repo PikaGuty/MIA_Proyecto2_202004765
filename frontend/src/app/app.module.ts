@@ -34,6 +34,8 @@ import { DatosComponent } from './datos/datos.component';
 import { IntrusoComponent } from './intruso/intruso.component';
 import { CalmaoComponent } from './calmao/calmao.component';
 import { AcsDenegadoComponent } from './acs-denegado/acs-denegado.component';
+import { InfoArchComponent } from './info-arch/info-arch.component';
+
 
 @NgModule({
   declarations: [
@@ -57,6 +59,7 @@ import { AcsDenegadoComponent } from './acs-denegado/acs-denegado.component';
     IntrusoComponent,
     CalmaoComponent,
     AcsDenegadoComponent,
+    InfoArchComponent,
     
   ],
   imports: [

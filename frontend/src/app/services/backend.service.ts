@@ -65,4 +65,24 @@ export class BackendService {
   nuevoArchCarp(cuerpo:any){
     return this.http.post(`${this.URL}/nuevoArchCarp`,cuerpo)
   }
+
+  eliminArchCarp(cuerpo:any){
+    return this.http.post(`${this.URL}/eliminArchCarp`,cuerpo)
+  }
+
+  modCarp(cuerpo:any){
+    return this.http.post(`${this.URL}/modCarp`,cuerpo)
+  }
+
+  modArch(cuerpo:any){
+    return this.http.post(`${this.URL}/modArch`,cuerpo)
+  }
+
+  reportarUsuario(cuerpo:any){
+    return this.http.post(`${this.URL}/reportarUsuario`,cuerpo)
+  }
+
+  eliminarUsuario(cuerpo:any){
+    return this.http.post(`${this.URL}/eliminarUsuario`,cuerpo)
+  }
 }

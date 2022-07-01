@@ -1,0 +1,23 @@
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+<h1 mat-dialog-title>Modificar {{data.name}}</h1>
+<div mat-dialog-content>
+    <form>
+        <div class="mb-2">
+            <b><label class="form-label" >Nombre</label></b>
+            <input type="text" class="form-control" name="campo_nombre" [(ngModel)]=this.nombre>
+        </div>
+        <div class="mb-2">
+            <b><label class="form-label" >Contenido</label></b>
+            <textarea class="form-control" name="campo_texto" rows="5" [(ngModel)]=this.texto ></textarea>
+        </div>
+    </form>
+
+
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button color="primary" [mat-dialog-close]="{nombre:this.nombre,texto:this.texto}" cdkFocusInitial>Modificar</button>
+  <button mat-button color="warn" (click)="generatePDF()" cdkFocusInitial>Mostrar PDF</button>
+</div>

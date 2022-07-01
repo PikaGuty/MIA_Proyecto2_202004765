@@ -37,7 +37,7 @@
                                                     &nbsp;&nbsp;<button type="button" (click)="eliminar(node.id,node.name)" class="btn btn-danger btn-sm" style="border-radius: 48%;"><i class="fa fa-solid fa-trash"></i></button>
                                                 </ng-template>
                                                 <ng-template #other_content>
-                                                    &nbsp;&nbsp;<button type="button" class="btn btn-primary btn-sm" (click)="openDialog(node.id,node.name)" style="border-radius: 48%;">&nbsp;<i class="fa fa-solid fa-info"></i>&nbsp;</button>
+                                                    &nbsp;&nbsp;<button type="button" (click)="openDialog(node.id,node.name)" class="btn btn-primary btn-sm" (click)="openDialog(node.id,node.name)" style="border-radius: 48%;">&nbsp;<i class="fa fa-solid fa-info"></i>&nbsp;</button>
                                                     &nbsp;&nbsp;<button type="button" (click)="eliminar(node.id,node.name)" class="btn btn-danger btn-sm" style="border-radius: 48%;"><i class="fa fa-solid fa-trash"></i></button>
                                                 </ng-template>
                                               
