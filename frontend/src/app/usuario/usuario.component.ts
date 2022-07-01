@@ -286,7 +286,7 @@ export class UsuarioComponent implements OnInit {
 
   async nuevoArchivo(id:number){
     const { value: nombre } = await Swal.fire({
-      title: 'Nueva Archivo',
+      title: 'Nuevo Archivo',
       input: 'text',
       inputLabel: 'Nombre del archivo',
       inputPlaceholder: 'Ingresa el nombre para el archivo',
@@ -343,30 +343,24 @@ export class UsuarioComponent implements OnInit {
   }
 
   async compartir(id:number, nombre:string){
-    const { value: fruit } = await Swal.fire({
-      title: 'Select field validation',
-      input: 'select',
-      inputOptions: {
-        'Fruits': {
-          apples: 'Apples',
-          bananas: 'Bananas',
-          grapes: 'Grapes',
-          oranges: 'Oranges'
-        },
-        'Vegetables': {
-          potato: 'Potato',
-          broccoli: 'Broccoli',
-          carrot: 'Carrot'
-        },
-        'icecream': 'Ice cream'
-      },
-      inputPlaceholder: 'Select a fruit',
-      showCancelButton: true,
+    const { value: correo } = await Swal.fire({
+      title: 'Compartir',
+      input: 'email',
+      inputLabel: 'Correo electrónico',
+      inputPlaceholder: 'Ingresa el correo electrónico para compartir',
+      showCancelButton: true, 
+      confirmButtonText: 'Enviar', 
+      cancelButtonText:'Cancelar'
       
     })
     
-    if (fruit) {
-      Swal.fire(`You selected: ${fruit}`)
+    if (correo) {     
+      Swal.fire(
+        'Creada',
+        `Nombre del archivo: ${correo}`,
+        'success'
+      )
+
     }
   }
 
