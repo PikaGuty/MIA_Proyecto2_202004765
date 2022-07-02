@@ -343,7 +343,7 @@ function formatearJSON(obj){
                 '"nusr":"202004765JavierGutierrez",'+
                 '"correo":"fubox.admi@gmail.com",'+
                 '"telefono":"54338088",'+
-                '"pass":"1234",'+
+                '"pass":"202004765JavierGutierrez",'+
                 '"fnac":"14-03-2001",'+
                 '"fcre":"23-06-2022"'+
             '},'+
