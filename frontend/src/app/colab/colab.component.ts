@@ -164,7 +164,7 @@ export class ColabComponent implements OnInit {
     })
     
     swalWithBootstrapButtons.fire({
-      title: 'Desea dejar de ser colaborador '+nombre+'?',
+      title: 'Desea dejar de ser colaborador de '+nombre+'?',
       text: "Al dejar de ser colaborador ya no tendrá acceso a este archivo/carpeta",
       icon: 'warning',
       showCancelButton: true,
