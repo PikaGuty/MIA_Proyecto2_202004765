@@ -43,6 +43,85 @@ function convertir(anterior,carpetas,archivos,nu){
     return JSON.stringify(tarray)
 }
 
+function compartirF(body){
+    const fs = require("fs");
+    let usersjson = fs.readFileSync("./datos.json","utf-8"); //Leyendo archivo JSON
+    let cont = JSON.parse(usersjson); //Parseando a JSON
+    addColab(body.id,cont.carpetas,body.propietario,false)
+
+    usersjson = JSON.stringify(cont);
+    fs.writeFileSync("./datos.json",usersjson,"utf-8");
+
+    const dia = new Date();
+    dia.getDate();
+
+    if(usuarios.existeCorreo(body.propietario)){
+        contenidoCorreo='Has sido invitado a colaborar :D \n Encontrarás la carpeta/archivo en tu perfil en la sección de "compartidos conmigo"';
+        usuarios.enviarCorreo(body.propietario,"FuBox - Invitación a colaboración", contenidoCorreo);
+    }else{
+        contenidoCorreo='Has sido invitado a colaborar :D \n Crea tu cuenta en FuBox y al ser aprobado por el administrador podrás encontrar la carpeta/archivo en tu perfil en la sección de "compartidos conmigo"';
+        usuarios.enviarCorreo(body.propietario,"FuBox - Invitación a colaboración", contenidoCorreo);
+    }
+
+    return "shi"
+}
+
+function addColab(id,archivos,propietario,asignar){
+    for (let i = 0; i < archivos.length; i++) {
+        if(archivos[i].contenido){
+            if(id==archivos[i].id){
+                addColab(id,archivos[i].contenido,propietario,true)
+                archivos[i].colaboradores.push(propietario)
+                
+            }else{
+                if(!asignar)
+                    addColab(id,archivos[i].contenido,propietario,false)
+            }
+        }else{
+            if(id==archivos[i].id||asignar){
+                archivos[i].colaboradores.push(propietario)
+            }
+        }
+    }
+}
+
+function terminarArchCarp(body){
+    const fs = require("fs");
+    let usersjson = fs.readFileSync("./datos.json","utf-8"); //Leyendo archivo JSON
+    let cont = JSON.parse(usersjson); //Parseando a JSON
+    delColab(body.id,cont.carpetas,body.propietario,false)
+
+    usersjson = JSON.stringify(cont);
+    fs.writeFileSync("./datos.json",usersjson,"utf-8");
+
+    return "shi"
+}
+
+function delColab(id,archivos,propietario,asignar){
+    for (let i = 0; i < archivos.length; i++) {
+        if(archivos[i].contenido){
+            if(id==archivos[i].id){
+                delColab(id,archivos[i].contenido,propietario,true)
+                for (let j = 0; j < archivos[i].colaboradores.length; j++) {
+                    if(archivos[i].colaboradores[j]==propietario){
+                        archivos[i].colaboradores.splice(j, 1);
+                    }
+                }
+            }else{
+                delColab(id,archivos[i].contenido,propietario,false)
+            }
+        }else{
+            if(id==archivos[i].id||asignar){
+                for (let j = 0; j < archivos[i].colaboradores.length; j++) {
+                    if(archivos[i].colaboradores[j]==propietario){
+                        archivos[i].colaboradores.splice(j, 1);
+                    }
+                }
+            }
+        }
+    }
+}
+
 function getFile(body){
     const fs = require("fs");
     let usersjson = fs.readFileSync("./datos.json","utf-8"); //Leyendo archivo JSON
@@ -155,7 +234,7 @@ function modCarp(body){
     if(res!=null){
         const dia = new Date();
         dia.getDate();
-        contenidoCorreo="Se ha modificado el nombre de tu carpeta a "+body.nombre;
+        contenidoCorreo="Se ha modificado el nombre de tu carpeta a "+body.nombre+" a "+dia;
         
         usuarios.enviarCorreo(retornarCorreo(res),"FuBox - Modificación", contenidoCorreo);
     }
@@ -193,7 +272,7 @@ function modArch(body){
     if(res!=null){
         const dia = new Date();
         dia.getDate();
-        contenidoCorreo="Se ha modificado el archivo "+body.nombre;
+        contenidoCorreo="Se ha modificado el archivo "+body.nombre+" a "+dia;
         usuarios.enviarCorreo(retornarCorreo(res),"FuBox - Modificación", contenidoCorreo);
     }
     return res
@@ -308,15 +387,52 @@ function buscarUser(usr,archivos,propiedades){
         if(archivos[i].contenido){
             console.log(archivos[i].nombre)
             if(usr==archivos[i].propietario){
-                return archivos[i]
-            }
-            ar=buscarUser(usr,archivos[i].contenido,propiedades)
-            if(ar!=null){
-                propiedades.push(ar)
-            }
+                propiedades.push(archivos[i])
+                //return null
+            }else
+            buscarUser(usr,archivos[i].contenido,propiedades)
+            
         }else{
             if(usr==archivos[i].propietario){
-                return archivos[i]
+                propiedades.push(archivos[i])
+            }
+        }
+    }
+    return arch
+}
+
+function obtenerColab(body){
+    const fs = require("fs");
+    let usersjson = fs.readFileSync("./datos.json","utf-8"); //Leyendo archivo JSON
+    let cont = JSON.parse(usersjson);
+    let propiedades = []
+
+    buscarUserColab(body.propietario,cont.carpetas,propiedades)
+
+    return propiedades
+}
+
+function buscarUserColab(usr,archivos,propiedades){
+    var arch=null;
+    var ar=null;
+    for (let i = 0; i < archivos.length; i++) {
+        console.log(usr+" = "+archivos[i].propietario)
+        if(archivos[i].contenido){
+            console.log(archivos[i].nombre)
+            a = false;
+            for (let j = 0; j < archivos[i].colaboradores.length; j++) {
+                if(usr==archivos[i].colaboradores[j]){
+                    a=true
+                    propiedades.push(archivos[i])
+                }
+            }
+            if(!a)
+                buscarUserColab(usr,archivos[i].contenido,propiedades)
+        }else{
+            for (let j = 0; j < archivos[i].colaboradores.length; j++) {
+                if(usr==archivos[i].colaboradores[j]){
+                    propiedades.push(archivos[i])
+                }
             }
         }
     }
@@ -341,4 +457,4 @@ function retornarCorreo(user){
     return null;
 }
 
-module.exports={convertir_ingresar,obtenerCarpetas,formatearJSON,getFile,cambiarProp,obtenerDU,nuevoArchCarp,eliminArchCarp, modCarp, modArch}
+module.exports={terminarArchCarp,obtenerColab,compartirF,convertir_ingresar,obtenerCarpetas,formatearJSON,getFile,cambiarProp,obtenerDU,nuevoArchCarp,eliminArchCarp, modCarp, modArch}

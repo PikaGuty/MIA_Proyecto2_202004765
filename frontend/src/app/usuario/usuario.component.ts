@@ -78,6 +78,7 @@ export class UsuarioComponent implements OnInit {
               js = JSON.stringify(res)
               this.contenido=js
               resulta=res;
+              console.log(JSON.parse(js))
               this.dataSource.data = JSON.parse(js);
             },
             err=>{
@@ -355,7 +356,20 @@ export class UsuarioComponent implements OnInit {
     })
     
     if (correo) {   
-        
+      let json={
+        id:String(id),
+        propietario:correo,
+      }
+
+      var js:any;
+        this.backend.compartirF(json).subscribe(
+          res=>{
+            alert("Se ha añadido a "+correo);
+          },
+          err=>{
+            alert("Ocurrió un error")
+          }
+        )
       Swal.fire(
         'Creada',
         `Nombre del archivo: ${correo}`,

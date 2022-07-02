@@ -22,5 +22,9 @@ router.post("/nuevoArchCarp",control.nuevoArchCarp)
 router.post("/eliminArchCarp",control.eliminArchCarp)
 router.post("/modCarp",control.modCarp)
 router.post("/modArch",control.modArch)
+router.post("/compartirF",control.compartirF)
+router.post("/obtenerColab",control.obtenerColab)
+router.post("/terminarArchCarp",control.terminarArchCarp)
+
 
 module.exports = router

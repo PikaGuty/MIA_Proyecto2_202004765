@@ -58,12 +58,13 @@ export class AdminComponent implements OnInit {
 
   constructor(private backend: BackendService, private router: Router, public dialog: MatDialog){
     var js:any;
-    var resulta;
+    var resulta; 
     this.backend.Obtener().subscribe(
       res=>{
         js = JSON.stringify(res)
         this.contenido=js
         resulta=res;
+        
         this.dataSource.data = JSON.parse(js);
       },
       err=>{

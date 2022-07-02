@@ -85,4 +85,18 @@ export class BackendService {
   eliminarUsuario(cuerpo:any){
     return this.http.post(`${this.URL}/eliminarUsuario`,cuerpo)
   }
+
+  compartirF(cuerpo:any){
+    return this.http.post(`${this.URL}/compartirF`,cuerpo)
+  }
+
+  obtenerColab(cuerpo:any){
+    return this.http.post(`${this.URL}/obtenerColab`,cuerpo)
+  }
+
+  terminarArchCarp(cuerpo:any){
+    return this.http.post(`${this.URL}/terminarArchCarp`,cuerpo)
+  }
+
+  
 }

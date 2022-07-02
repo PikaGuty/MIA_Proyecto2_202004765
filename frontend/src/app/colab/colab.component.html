@@ -1,1 +1,76 @@
-<p>colab works!</p>
+
+<div >
+    <div id="wrapper" >
+        <app-barrausr></app-barrausr>
+    
+        <div id="content-wrapper" class="d-flex flex-column body" >
+            <div class="container-fluid">
+                <div class="row">
+                    <br>
+                </div>
+                
+
+                <div class="row">
+                    <div class="col-xl-15 col-lg-14">
+                        <div class="card shadow mb-4">
+                            <div class="card shadow ">
+                                <div class="card-header py-3 d-flex ">
+                                    <div class="p-2 py-3"><h3 class="m-0 font-weight-bold text-primary"><i class="fa fa-solid fa-code"></i> Archivos</h3></div>
+                                                   
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+
+                                        <mat-tree color=primary [dataSource]="dataSource" [treeControl]="treeControl">
+                                            <!-- This is the tree node template for leaf nodes -->
+                                            <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+                                              <!-- use a disabled button to provide padding for tree leaf -->
+                                              <button mat-icon-button disabled></button>
+                                              {{node.name}}
+
+                                              <div *ngIf="node.carpeta;then content else other_content">here is ignored</div>
+                                                <ng-template #content>
+                                                    &nbsp;&nbsp;<button type="button" (click)="nuevoArchivo(node.id)" class="btn btn-success btn-sm"  style="border-radius: 48%;"><i class="fa fa-solid fa-file"></i></button>
+                                                    &nbsp;&nbsp;<button type="button" (click)="nuevaCarpeta(node.id)" class="btn btn-warning btn-sm"  style="border-radius: 48%;"><i class="fa fa-solid fa-folder"></i></button>
+                                                    &nbsp;&nbsp;<button type="button" (click)="editar(node.id,node.name)" class="btn btn-primary btn-sm" style="border-radius: 48%;"><i class="fa fa-solid fa-pencil"></i></button>
+                                                    &nbsp;&nbsp;<button type="button" (click)="compartir(node.id,node.name)" class="btn btn-dark btn-sm" style="border-radius: 48%;"><i class="fa fa-solid fa-share-square"></i></button>
+                                                    &nbsp;&nbsp;<button type="button" (click)="eliminar(node.id,node.name)" class="btn btn-danger btn-sm" style="border-radius: 48%;"><i class="fa fa-solid fa-trash"></i></button>
+                                                </ng-template>
+                                                <ng-template #other_content>
+                                                    &nbsp;&nbsp;<button type="button" (click)="openDialog(node.id,node.name)" class="btn btn-primary btn-sm" (click)="openDialog(node.id,node.name)" style="border-radius: 48%;">&nbsp;<i class="fa fa-solid fa-info"></i>&nbsp;</button>
+                                                    &nbsp;&nbsp;<button type="button" (click)="eliminar(node.id,node.name)" class="btn btn-danger btn-sm" style="border-radius: 48%;"><i class="fa fa-solid fa-trash"></i></button>
+                                                </ng-template>
+                                              
+                                              
+                                            </mat-tree-node>
+                                            <!-- This is the tree node template for expandable nodes -->
+                                            <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+                                              <button mat-icon-button matTreeNodeToggle
+                                                      [attr.aria-label]="'Toggle ' + node.name">
+                                                <mat-icon class="mat-icon-rtl-mirror">
+                                                  {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                                </mat-icon>
+                                              </button>
+                                              {{node.name}}
+                                              <!--<swal #deleteSwal [swalOptions]="{ title: 'Está seguro que desea eliminar '+node.name+'?', text: 'Al eliminarlo también eliminará todo su contenido', icon: 'warning', showCancelButton: true,confirmButtonColor: '#d33', cancelButtonColor: '#3085d6', confirmButtonText: 'Eliminar', cancelButtonText:'Cancelar' }"></swal>
+                                              <swal #editSwal [swalOptions]="{ title: 'Modificar '+node.name, input: 'text', inputLabel: 'Nombre ', inputValue: this.nuevoNombre, showCancelButton: true, confirmButtonText: 'Modificar', cancelButtonText:'Cancelar' }"></swal>
+                                              -->
+                                              &nbsp;&nbsp;<button type="button" (click)="nuevoArchivo(node.id)" class="btn btn-success btn-sm"  style="border-radius: 48%;"><i class="fa fa-solid fa-file"></i></button>
+                                              &nbsp;&nbsp;<button type="button" (click)="nuevaCarpeta(node.id)" class="btn btn-warning btn-sm"  style="border-radius: 48%;"><i class="fa fa-solid fa-folder"></i></button>
+                                              &nbsp;&nbsp;<button type="button" (click)="editar(node.id,node.name)" class="btn btn-primary btn-sm" style="border-radius: 48%;"><i class="fa fa-solid fa-pencil"></i></button>
+                                              &nbsp;&nbsp;<button type="button" (click)="eliminar(node.id,node.name)" class="btn btn-danger btn-sm" style="border-radius: 48%;"><i class="fa fa-solid fa-trash"></i></button>
+                                            </mat-tree-node>
+                                          </mat-tree>
+                                          
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </div>
+    <app-foot></app-foot>
+</div>

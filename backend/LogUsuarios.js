@@ -119,14 +119,15 @@ function retornarUsuariosH(){
     let cont = JSON.parse(usersjson); //Parseando a JSON
 
     var usrs = cont.usuarios; //accediendo a elemento usuarios
-
     var usuarios=[]
-    for (let i = 0; i < usrs.normales.length; i++) {
-        if(usrs.normales[i].status =="1"){
-            list = {value: usrs.normales[i].nusr, viewValue: usrs.normales[i].nusr}
-            usuarios.push(list)
+    
+       for (let i = 0; i < usrs.normales.length; i++) {
+            if(usrs.normales[i].status =="1"){
+                list = {value: usrs.normales[i].nusr, viewValue: usrs.normales[i].nusr}
+                usuarios.push(list)
+            }
         }
-    }
+
     return usuarios
 }
 
@@ -239,6 +240,20 @@ function modificarUsuario(datos){
     
 }
 
+function existeCorreo(correo){
+    const fs = require("fs");
+    let usersjson = fs.readFileSync("./datos.json","utf-8"); //Leyendo archivo JSON
+    let cont = JSON.parse(usersjson); //Parseando a JSON
+    var usrs = cont.usuarios; //accediendo a elemento usuarios
+
+    for (let i = 0; i < usrs.normales.length; i++) {
+        if(usrs.normales[i].correo==correo){
+            return true
+        }
+    }
+    return false
+}
+
 function enviarCorreo(correo, asunto, contenido){
     var nodemailer = require('nodemailer');
 
@@ -267,4 +282,4 @@ function enviarCorreo(correo, asunto, contenido){
     });
 }
 
-module.exports={enviarCorreo, modificarUsuario, datosUsuario, obtener, ingresarUsuario, login, aceptarUsuario, reportarUsuario, eliminarUsuario, retornarUsuarios, retornarUsuariosH}
+module.exports={existeCorreo,enviarCorreo, modificarUsuario, datosUsuario, obtener, ingresarUsuario, login, aceptarUsuario, reportarUsuario, eliminarUsuario, retornarUsuarios, retornarUsuariosH}

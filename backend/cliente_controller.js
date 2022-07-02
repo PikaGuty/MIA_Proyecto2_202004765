@@ -86,3 +86,16 @@ exports.modCarp = async(req,res)=>{
 exports.modArch = async(req,res)=>{
     res.json({Respuesta:archivs.modArch(req.body)})
 }
+
+exports.compartirF= async(req,res)=>{
+    res.json({Respuesta:archivs.compartirF(req.body)})
+}
+
+exports.obtenerColab= async(req,res)=>{
+    res.json({Respuesta:archivs.obtenerColab(req.body)})
+}
+
+
+exports.terminarArchCarp= async(req,res)=>{
+    res.json({Respuesta:archivs.terminarArchCarp(req.body)})
+}

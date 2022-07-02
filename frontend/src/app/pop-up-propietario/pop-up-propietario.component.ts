@@ -40,7 +40,10 @@ export class PopUpPropietarioComponent implements OnInit {
       res=>{
         js = JSON.stringify(res)
         //console.log(JSON.parse(js)[0])
-        this.usuarios.push(JSON.parse(js)[0]);
+        for (let i = 0; i < JSON.parse(js).length; i++) {
+          this.usuarios.push(JSON.parse(js)[i]);
+        }
+        
       },
       err=>{
         alert("Ocurrió un error")
